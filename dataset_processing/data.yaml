@@ -1,0 +1,6 @@
+train: /content/drive/MyDrive/Precision_Spraying/data/train/images
+val: /content/drive/MyDrive/Precision_Spraying/data/valid/images
+test: /content/drive/MyDrive/Precision_Spraying/data/valid/images
+
+nc: 2
+names: ['healthy_apple', 'healthy_cherry']
