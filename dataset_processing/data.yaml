@@ -1,6 +1,0 @@
-train: /content/drive/MyDrive/Precision_Spraying/data/train/images
-val: /content/drive/MyDrive/Precision_Spraying/data/valid/images
-test: /content/drive/MyDrive/Precision_Spraying/data/valid/images
-
-nc: 50
-names: ['pest_slug', 'disease_apple_blackRot', 'disease_cherry_powderyMildew', 'disease_strawberry_leafScorch', 'pest_ants', 'healthy_maize', 'healthy_pepper', 'healthy_cassava', 'disease_cassava_greenMite', 'pest_leafBeetle', 'disease_grape_leafBlight', 'pest_earthworms', 'disease_cassava_brownSpot', 'weed_shallow', 'disease_pepper_bacterialSpot', 'disease_tomato_spiderMite', 'disease_peach_bactrialSpot', 'disease_apple_scab', 'pest_beetle', 'disease_tomato_yellowLeafCurlVirus', 'disease_cassava_bacterialBlight', 'disease_maize_rust', 'disease_grape_blackMeasles', 'healthy_tomato', 'pest_moth', 'disease_apple_cedar_rust', 'pest_snail', 'disease_cassava_mosaic', 'healthy_grape', 'pest_weevil', 'healthy_peach', 'disease_tomato_mosaicVirus', 'disease_potato_lateBlight', 'disease_grape_blackRot', 'weed_deep', 'pest_earwig', 'pest_bees', 'disease_tomato_leafMold', 'healthy_apple', 'disease_tomato_lateBlight', 'pest_catterpillar', 'healthy_cherry', 'disease_tomato_bacterialSpot', 'disease_maize_leafBlight', 'healthy_potato', 'pest_grasshopper', 'pest_fallArmyWorm', 'pest_wasp', 'healthy_strawberry', 'disease_potato_earlyBlight']
