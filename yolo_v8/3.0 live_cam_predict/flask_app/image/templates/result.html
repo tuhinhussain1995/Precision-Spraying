@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Result</h1>
+    <img src="{{ url_for('static', filename='output.png') }}" alt="Processed Image">
+    <h2>Class Names:</h2>
+    <ul>
+        {% for class_name in class_names %}
+            <li>{{ class_name }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Object Locations:</h2>
+    <ul>
+        {% for location in object_locations %}
+            <li>{{ location }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
