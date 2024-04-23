@@ -1,26 +1,38 @@
+import os
+import shutil
 from ultralytics import YOLO
-import cv2
 
 model = YOLO('best.pt')
-results = model.predict('pest_snail.jpg')
 
+# Navigate to the directory
+directory = "C:/Users/tuhin/Desktop/Precision-Spraying/yolo_v8/3.0 live_cam_predict/run_directly/video/runs/detect"
+
+# List all directories in the specified directory
+directories = [d for d in os.listdir(directory) if os.path.isdir(os.path.join(directory, d))]
+
+# Iterate over each directory and delete it
+for d in directories:
+    shutil.rmtree(os.path.join(directory, d))
+
+results = model.predict(task='detect', mode='predict', model='best.pt', conf=0.25, source='video.mp4', save=True)
+
+frame_no = 0
 class_name = ""
 object_location = ""
 
-img = cv2.imread('pest_snail.jpg')
-
 for result in results:
     boxes = result.boxes.cpu().numpy()
+    frame_no += 1
     for i, box in enumerate(boxes):
         r = box.xyxy[0].astype(int)
-        crop = img[r[1]:r[3], r[0]:r[2]]
-        cv2.imwrite(str(i) + ".jpg", crop)
-
         object_location = r
 
     for box in result.boxes:
         class_id = int(box.data[0][-1])
         class_name = model.names[class_id]
 
-print("Class Detected: ", class_name)
-print("Object Location: ", object_location)
+    if(class_name != ''):
+        print("Frame: {:<8} Class: {:<20} Object Location: {}".format(str(frame_no), class_name, object_location))
+
+    class_name = ""
+    object_location = ""
