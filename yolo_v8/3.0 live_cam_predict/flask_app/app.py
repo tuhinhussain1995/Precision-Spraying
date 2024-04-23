@@ -10,7 +10,10 @@ def index():
 
 @app.route('/detect', methods=['POST'])
 def detect():
-    result = model.predict(source=0, imgsz=640, conf=0.7, show=True)
+    result = model.predict(source=0, imgsz=320, conf=0.7, show=True)
+
+    print(result)
+
     return result.imgs[0]
 
 if __name__ == '__main__':
