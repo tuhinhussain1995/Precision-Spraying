@@ -10,6 +10,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatCardModule } from '@angular/material/card';
     HttpClientModule,
     MatTabsModule,
     MatSlideToggleModule,
-    MatCardModule
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [
     provideAnimationsAsync()

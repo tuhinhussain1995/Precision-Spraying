@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './image.component.scss'
 })
 export class ImageComponent {
+
+  uploadedImage: string = "";
   imageUrl: string = "";
   response: any;
   responseReceived: boolean = false;
@@ -19,7 +21,8 @@ export class ImageComponent {
 
     reader.onload = (e) => {
       if (reader.result) {
-        const base64String = reader.result.toString().split(',')[1]; // Extract base64 string from Data URL
+        this.uploadedImage = reader.result.toString();
+        const base64String = reader.result.toString().split(',')[1];
         this.callApi(base64String);
       } else {
         console.error('Failed to read the file.');

@@ -1,13 +1,24 @@
-<div class="row g-5 gx-xxl-8">
-    <input type="file" (change)="onFileSelected($event)">
-    
-    <span *ngIf="responseReceived">
-      <div>
-        <img [src]="imageUrl" alt="Uploaded Image">
+<div class="main-div">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <input type="file" (change)="onFileSelected($event)" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image" class="img-fluid">
+        </div>
       </div>
-      <div>
-        <p>Class Names: {{ response.class_names }}</p>
-        <p>Object Locations: {{ response.object_locations }}</p>
+      <div class="row mt-3" *ngIf="responseReceived">
+        <div class="col-md-6">
+          <img [src]="imageUrl" alt="Uploaded Image" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+          <div>
+            <p>Class Names: {{ response.class_names }}</p>
+            <p>Object Locations: {{ response.object_locations }}</p>
+          </div>
+        </div>
       </div>
-    </span>
+    </div>
   </div>
+  
