@@ -5,6 +5,7 @@ import { VideoComponent } from './video/video.component';
 import { LiveStreamComponent } from './live-stream/live-stream.component';
 
 const routes: Routes = [
+  { path: '', component: ImageComponent },
   { path: 'image', component: ImageComponent },
   { path: 'video', component: VideoComponent },
   { path: 'live-stream', component: LiveStreamComponent }
