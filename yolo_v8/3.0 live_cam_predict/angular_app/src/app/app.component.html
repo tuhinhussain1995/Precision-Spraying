@@ -1,10 +1,8 @@
 
-<!-- app.component.html -->
 <div>
   <button routerLink="/image" [ngClass]="{'active': isActive('/image')}">Image</button>
   <button routerLink="/video" [ngClass]="{'active': isActive('/video')}">Video</button>
   <button routerLink="/live-stream" [ngClass]="{'active': isActive('/live-stream')}">Live Stream</button>
 </div>
-
 
 <router-outlet></router-outlet>
