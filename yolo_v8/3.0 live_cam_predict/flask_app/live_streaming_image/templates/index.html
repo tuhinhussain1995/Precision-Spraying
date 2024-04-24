@@ -4,13 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Object Detection</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <h1>Object Detection</h1>
-    <img id="video_feed" src="{{ url_for('stream_video') }}" width="640" height="480" alt="Camera Feed">
-    <form action="/process_control" method="post">
-        <button type="submit" name="action" value="start">Start</button>
-        <button type="submit" name="action" value="stop">Stop</button>
+    <form id="process_control_form" action="/process_control" method="post">
+        <button type="submit" name="action" value="start" id="start_btn">Start</button>
+        <button type="submit" name="action" value="stop" id="stop_btn" style="display:none;">Stop</button>
     </form>
+    
+    <div id="video_container">
+        <img src="" id="video_feed" width="640" height="480">
+    </div>
+
+    <script>
+        var intervalId;
+
+        function updateVideo() {
+            $.getJSON("/get_processed_image", function(data) {
+                $("#video_feed").attr("src", "data:image/jpeg;base64," + data.img_bytes);
+                // Update other UI elements based on data if needed
+            });
+        }
+
+        $(document).ready(function() {
+            $("#start_btn").click(function() {
+                intervalId = setInterval(updateVideo, 1000); // Update every second
+                $("#start_btn").hide();
+                $("#stop_btn").show();
+                return false;
+            });
+
+            $("#stop_btn").click(function() {
+                clearInterval(intervalId);
+                $.post("/process_control", { action: "stop" });
+                $("#start_btn").show();
+                $("#stop_btn").hide();
+                return false;
+            });
+        });
+    </script>
 </body>
 </html>

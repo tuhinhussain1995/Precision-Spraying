@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, Response
+from flask import Flask, render_template, request, jsonify, Response
 from ultralytics import YOLO
 import cv2
-import os
 import threading
 import time
 from PIL import Image
@@ -48,7 +47,7 @@ def process_camera_image():
                 # Convert the processed image to bytes
                 buffered = BytesIO()
                 processed_image.save(buffered, format="JPEG")
-                img_bytes = buffered.getvalue()
+                img_bytes = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
                 yield (b'--frame\r\n'
                        b'Content-Type: image/jpeg\r\n\r\n' + img_bytes + b'\r\n')
@@ -91,16 +90,44 @@ def process_control():
         if not process_running:
             process_running = True
             stop_thread = False
-            return redirect(url_for('stream_video'))
     elif action == 'stop':
         process_running = False
         stop_thread = True
-    return redirect(url_for('index'))
+    return jsonify({'success': True})
 
 # Route for streaming video
 @app.route('/stream_video')
 def stream_video():
     return Response(process_camera_image(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# Route for retrieving processed image
+@app.route('/get_processed_image')
+def get_processed_image():
+    class_names, object_locations, img_bytes = process_camera_image_once()
+    return jsonify(class_names=class_names, object_locations=object_locations, img_bytes=img_bytes)
+
+# Helper function to process a single frame for display
+def process_camera_image_once():
+    camera = cv2.VideoCapture(0)  # Access the default camera (index 0)
+    ret, frame = camera.read()  # Read a frame from the camera
+    if ret:
+        # Convert BGR image to RGB
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # Convert RGB image to PIL Image format
+        pil_image = Image.fromarray(frame_rgb)
+        # Process the PIL image for object detection
+        class_names, object_locations = process_image(pil_image)
+        # Draw bounding boxes on the original frame
+        for location in object_locations:
+            cv2.rectangle(frame, (location[0], location[1]), (location[2], location[3]), (0, 0, 255), 3)
+        # Convert the frame back to PIL Image format
+        processed_image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+        # Convert the processed image to bytes
+        buffered = BytesIO()
+        processed_image.save(buffered, format="JPEG")
+        img_bytes = base64.b64encode(buffered.getvalue()).decode('utf-8')
+        return class_names, object_locations, img_bytes
+    return [], [], ""
 
 # Route for homepage
 @app.route('/')
