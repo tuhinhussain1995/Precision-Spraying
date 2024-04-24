@@ -1,0 +1,13 @@
+<div class="row g-5 gx-xxl-8">
+    <input type="file" (change)="onFileSelected($event)">
+    
+    <span *ngIf="responseReceived">
+      <div>
+        <img [src]="imageUrl" alt="Uploaded Image">
+      </div>
+      <div>
+        <p>Class Names: {{ response.class_names }}</p>
+        <p>Object Locations: {{ response.object_locations }}</p>
+      </div>
+    </span>
+  </div>
