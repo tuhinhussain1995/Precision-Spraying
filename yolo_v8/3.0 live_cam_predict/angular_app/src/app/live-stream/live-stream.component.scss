@@ -21,3 +21,12 @@
     font-family: Roboto, "Helvetica Neue", sans-serif; 
     font-size: 17px;
 }
+
+.inner-div {
+    overflow-y: auto;
+}
+
+.inner-div::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar width */
+    height: 0; /* Remove scrollbar height */
+}

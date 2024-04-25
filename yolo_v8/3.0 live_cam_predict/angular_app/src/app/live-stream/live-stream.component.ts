@@ -13,6 +13,10 @@ export class LiveStreamComponent implements OnDestroy {
   uploadedImage: string = "";
 
   onProcess: boolean = false;
+
+  current_frame_no: number = 0;
+  current_area_no: number = 0;
+  consoleValue: any = [];
   
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
@@ -104,6 +108,18 @@ export class LiveStreamComponent implements OnDestroy {
         this.responseReceived = true;
 
         this.imageUrl = 'data:image/jpeg;base64,' + res.img_bytes; // Assuming the image is JPEG format
+
+        this.current_area_no = this.current_area_no + 1;
+        this.current_frame_no = this.current_area_no + 1;
+
+        var value = {
+          current_frame_no: this.current_frame_no, 
+          current_area_no: this.current_area_no,
+          class_names: this.response.class_names, 
+          object_locations: this.response.class_names
+        }
+
+        this.consoleValue.push(value)
       }, (error) => {
         console.error('API Error:', error);
       });

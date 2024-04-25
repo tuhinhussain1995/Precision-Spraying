@@ -23,20 +23,24 @@
     <div style="height: 45%; margin-top: 15px;">
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; position: relative;">
             <div class="overlay">Console</div>
+            <div *ngIf="responseReceived" style="margin: auto;" class="inner-div">
+                <span *ngFor="let console of consoleValue">
+                    <p>Current Frame No: {{ console.current_frame_no }}</p>
+                    <p>Current Area No: {{ console.current_area_no }}</p>
+                    <p>Class Names: {{ console.class_names }}</p>
+                    <p>Object Locations: {{ console.object_locations }}</p>
+                </span>
+            </div>
+        </mat-card>
+        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
+            <div class="overlay">Detection Overall Result</div>
             <div *ngIf="responseReceived" style="margin: auto;">
                 <p>Class Names: {{ response.class_names }}</p>
                 <p>Object Locations: {{ response.object_locations }}</p>
             </div>
         </mat-card>
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
-            <div class="overlay">Captured Image</div>
-            <div *ngIf="responseReceived" style="margin: auto;">
-                <p>Class Names: {{ response.class_names }}</p>
-                <p>Object Locations: {{ response.object_locations }}</p>
-            </div>
-        </mat-card>
-        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
-            <div class="overlay">Captured Image</div>
+            <div class="overlay">Precision Spraying Result</div>
             <div *ngIf="responseReceived" style="margin: auto;">
                 <p>Class Names: {{ response.class_names }}</p>
                 <p>Object Locations: {{ response.object_locations }}</p>
