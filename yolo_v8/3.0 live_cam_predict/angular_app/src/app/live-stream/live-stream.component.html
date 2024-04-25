@@ -1,19 +1,19 @@
 <div style="width: 100%;" [style.height]="screenHeight">
     <div style="height: 45%;">
-        <div style="height: 100%; width: calc(33.33% - 10px); float: left; overflow: hidden;">
+        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left;">
             <video #video autoplay playsinline height="100%"></video>
             <canvas #canvas id="canvas" style="display: none;"></canvas>
-        </div>
-        <div style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px;">
-            <span *ngIf="responseReceived">
-                <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image" height="100%" width="99%">
-            </span>
-        </div>
-        <div style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px;">
-            <span *ngIf="responseReceived">
-                <img [src]="imageUrl" alt="Uploaded Image" height="100%" width="99%">
-            </span>
-        </div>
+        </mat-card>
+        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px;">
+            <div *ngIf="responseReceived" style="margin: auto;">
+                <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image" height="100%" width="100%">
+            </div>
+        </mat-card>
+        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px;">
+            <div *ngIf="responseReceived" style="margin: auto;">
+                <img [src]="imageUrl" alt="Uploaded Image" height="100%" width="100%">
+            </div>
+        </mat-card>
     </div>
 
     <div style="height: 45%; margin-top: 15px;">
