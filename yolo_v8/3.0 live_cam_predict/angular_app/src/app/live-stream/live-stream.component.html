@@ -23,12 +23,21 @@
     <div style="height: 45%; margin-top: 15px;">
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; position: relative;">
             <div class="overlay">Console</div>
-            <div *ngIf="responseReceived" style="margin: auto;" class="inner-div">
+            <div *ngIf="responseReceived" style="margin: auto;" #scrollContainer class="inner-div">
                 <span *ngFor="let console of consoleValue">
-                    <p>Current Frame No: {{ console.current_frame_no }}</p>
-                    <p>Current Area No: {{ console.current_area_no }}</p>
-                    <p>Class Names: {{ console.class_names }}</p>
-                    <p>Object Locations: {{ console.object_locations }}</p>
+                    <p class="console-style">Current Frame No: {{ console.current_frame_no }}</p>
+                    <p class="console-style">Current Area No: {{ console.current_area_no }}</p>
+                    <p class="console-style">Class Names: {{ console.class_names }}</p>
+                    <p class="console-style">Object Locations: 
+                        <span *ngIf="console.object_locations.length > 1">
+                            <span *ngFor="let location of console.object_locations">
+                                [{{ location }}],
+                            </span>
+                        </span>
+                        <span *ngIf="console.object_locations.length == 1">
+                            [{{ console.object_locations }}]
+                        </span>
+                    </p>
                 </span>
             </div>
         </mat-card>

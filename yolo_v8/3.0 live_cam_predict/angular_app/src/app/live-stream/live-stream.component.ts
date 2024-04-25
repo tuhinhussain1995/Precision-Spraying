@@ -27,6 +27,8 @@ export class LiveStreamComponent implements OnDestroy {
 
   screenHeight: any = "";
 
+  @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
+
   constructor(private http: HttpClient) {
     this.screenHeight = (window.innerHeight - 120) + 'px'; 
     window.addEventListener('resize', () => {
@@ -109,17 +111,21 @@ export class LiveStreamComponent implements OnDestroy {
 
         this.imageUrl = 'data:image/jpeg;base64,' + res.img_bytes; // Assuming the image is JPEG format
 
-        this.current_area_no = this.current_area_no + 1;
-        this.current_frame_no = this.current_area_no + 1;
+        if(this.response.class_names.length > 0){
+          this.current_area_no = this.current_area_no + 1;
+          this.current_frame_no = this.current_area_no + 1;
 
-        var value = {
-          current_frame_no: this.current_frame_no, 
-          current_area_no: this.current_area_no,
-          class_names: this.response.class_names, 
-          object_locations: this.response.class_names
+          var value = {
+            current_frame_no: this.current_frame_no, 
+            current_area_no: this.current_area_no,
+            class_names: this.response.class_names, 
+            object_locations: this.response.object_locations
+          }
+
+          this.consoleValue.push(value);
         }
 
-        this.consoleValue.push(value)
+        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
       }, (error) => {
         console.error('API Error:', error);
       });
