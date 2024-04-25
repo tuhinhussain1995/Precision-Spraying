@@ -12,6 +12,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     MatSlideToggleModule,
     MatCardModule,
     MatGridListModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
   ],
   providers: [
     provideAnimationsAsync()

@@ -73,7 +73,7 @@
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
             <div class="overlay">Precision Spraying Result</div>
             <div *ngIf="responseReceived" style="margin: auto;" #scrollContainer1 class="spraying-result-div">
-                <span *ngFor="let console of sprayingResult">
+                <mat-card *ngFor="let console of sprayingResult" style="margin-bottom: 15px !important; padding: 10px !important; padding-bottom: 15px;">
                     <p class="spraying-console-style">Current Frame No: {{ console.current_frame_no }}</p>
                     <p class="spraying-console-style">Current Area No: {{ console.current_area_no }}</p>
                     <p class="spraying-console-style">Class Names: 
@@ -94,8 +94,21 @@
                             [{{ console.object_locations }}]
                         </span>
                     </p>
-                    <hr>
-                </span>
+                    <p *ngIf="console.need_to_spray_chemical" class="spraying-console-style" style="font-weight: bold;">{{ console.chemical_name }}</p>
+
+                    <div style="width: 100%; margin-top: -5px;" *ngIf="console.need_to_spray_chemical">
+                        <div style="width: 20px; float: left; height: 20px !important;">
+                            <mat-icon style="font-size: 20px; margin-top: 10px !important;" [style.color]="console.color">gps_fixed</mat-icon>
+                        </div>
+                        <div style="width: calc(96% - 20px); float: left;">
+                            <div style="width: 100%; margin-top: 11px; padding-left: 4px;">
+                                <p  class="spraying-console-style" style="font-weight: bold;">
+                                    {{ console.chemical_group_name }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
             </div>
         </mat-card>
     </div>

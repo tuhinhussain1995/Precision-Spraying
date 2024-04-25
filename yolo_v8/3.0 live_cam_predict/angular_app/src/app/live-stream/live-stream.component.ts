@@ -161,13 +161,15 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
               object_locations: this.response.object_locations[counter],
               color: "",
               need_to_spray_chemical: false,
+              chemical_group_name: "",
               chemical_name: ""
             }
 
             if(item.split("_")[0] == "pest"){
               sprayingResultValue.color = "red";
               sprayingResultValue.need_to_spray_chemical = true;
-              sprayingResultValue.chemical_name = "Apply Pest Control Chemical"
+              sprayingResultValue.chemical_group_name = "Cyfluthrin";
+              sprayingResultValue.chemical_name = "Apply Pest Control Chemical";
               suspectDetected = true;
 
               consoleValue.color = "red";
@@ -175,6 +177,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
             else if(item.split("_")[0] == "weed"){
               sprayingResultValue.color = "red";
               sprayingResultValue.need_to_spray_chemical = true;
+              sprayingResultValue.chemical_group_name = "Glyphosate";
               sprayingResultValue.chemical_name = "Apply Weed Control Chemical"
               suspectDetected = true;
 
@@ -183,6 +186,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
             else if(item.split("_")[0] == "disease"){
               sprayingResultValue.color = "red";
               sprayingResultValue.need_to_spray_chemical = true;
+              sprayingResultValue.chemical_group_name = "Sulphur fungicides";
               sprayingResultValue.chemical_name = "Apply Disease Control Chemical"
               suspectDetected = true;
 
