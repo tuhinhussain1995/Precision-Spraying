@@ -10,6 +10,7 @@ export class LiveStreamComponent implements OnDestroy {
   imageUrl: string = "";
   response: any;
   responseReceived: boolean = false;
+  uploadedImage: string = "";
 
   onProcess: boolean = false;
   
@@ -20,7 +21,14 @@ export class LiveStreamComponent implements OnDestroy {
 
   intervalId: any;
 
-  constructor(private http: HttpClient) {}
+  screenHeight: any = "";
+
+  constructor(private http: HttpClient) {
+    this.screenHeight = (window.innerHeight - 120) + 'px'; 
+    window.addEventListener('resize', () => {
+      this.screenHeight = (window.innerHeight - 120) + 'px';
+    });
+  }
 
   ngAfterViewInit() {
     this.videoElement = this.video.nativeElement;
@@ -75,6 +83,8 @@ export class LiveStreamComponent implements OnDestroy {
       canvasElement.height = this.videoElement.videoHeight;
 
       context.drawImage(this.videoElement, 0, 0, canvasElement.width, canvasElement.height);
+
+      this.uploadedImage = canvasElement.toDataURL('image/png'); 
 
       // Convert the canvas content to a base64 string
       const base64ImageData = canvasElement.toDataURL('image/png').split(',')[1]; // Extract base64 string after comma

@@ -5,12 +5,12 @@
           <input type="file" (change)="onFileSelected($event)" class="form-control">
         </div>
         <div class="col-md-6">
-          <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image" class="img-fluid">
+          <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image">
         </div>
       </div>
       <div class="row mt-3" *ngIf="responseReceived">
         <div class="col-md-6">
-          <img [src]="imageUrl" alt="Uploaded Image" class="img-fluid">
+          <img [src]="imageUrl" alt="Uploaded Image" >
         </div>
         <div class="col-md-6">
           <div>
