@@ -1,12 +1,17 @@
 <div style="width: 100%;" [style.height]="screenHeight">
     <div style="height: 45%;">
-        <div style="height: 100%; width: calc(50% - 7px); float: left;">
-            <video #video autoplay playsinline height="100%" width="100%"></video>
+        <div style="height: 100%; width: calc(33.33% - 10px); float: left; overflow: hidden;">
+            <video #video autoplay playsinline height="100%"></video>
             <canvas #canvas id="canvas" style="display: none;"></canvas>
         </div>
-        <div style="height: 100%; width: calc(50% - 7px); float: left; margin-left: 14px;">
+        <div style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px;">
             <span *ngIf="responseReceived">
                 <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image" height="100%" width="99%">
+            </span>
+        </div>
+        <div style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px;">
+            <span *ngIf="responseReceived">
+                <img [src]="imageUrl" alt="Uploaded Image" height="100%" width="99%">
             </span>
         </div>
     </div>
@@ -14,7 +19,8 @@
     <div style="height: 45%; margin-top: 15px;">
         <div style="height: 100%; width: calc(50% - 7px); float: left;">
             <span *ngIf="responseReceived">
-                <img [src]="imageUrl" alt="Uploaded Image" height="100%" width="99%">
+                <p>Class Names: {{ response.class_names }}</p>
+                <p>Object Locations: {{ response.object_locations }}</p>
             </span>
         </div>
         <div style="height: 100%; width: calc(50% - 7px); float: left; margin-left: 14px;">
