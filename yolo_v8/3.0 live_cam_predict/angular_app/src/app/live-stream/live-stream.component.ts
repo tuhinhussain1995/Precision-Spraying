@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 interface CountedItem {
@@ -9,7 +9,7 @@ interface CountedItem {
   templateUrl: './live-stream.component.html',
   styleUrls: ['./live-stream.component.scss']
 })
-export class LiveStreamComponent implements OnDestroy {
+export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
   imageUrl: string = "";
   response: any;
   responseReceived: boolean = false;
@@ -37,6 +37,7 @@ export class LiveStreamComponent implements OnDestroy {
   countedDetectedClasses: any[] = [];
 
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
+  @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
 
   constructor(private http: HttpClient) {
     this.screenHeight = (window.innerHeight - 120) + 'px'; 
@@ -49,6 +50,17 @@ export class LiveStreamComponent implements OnDestroy {
 
   ngAfterViewInit() {
     this.videoElement = this.video.nativeElement;
+  }
+
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+  } 
+
+  scrollToBottom(): void {
+      try {
+        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+        this.scrollContainer1.nativeElement.scrollTop = this.scrollContainer1.nativeElement.scrollHeight;
+      } catch(err) { }                 
   }
 
   ngOnDestroy() {
@@ -127,25 +139,73 @@ export class LiveStreamComponent implements OnDestroy {
         this.current_frame_no = this.current_frame_no + 1;
         this.total_area_covered = (1*this.current_area_no) + " Square Meters";
 
-        var value = {
+        var consoleValue = {
           current_frame_no: this.current_frame_no, 
           current_area_no: this.current_area_no,
           class_names: this.response.class_names, 
-          object_locations: this.response.object_locations
+          object_locations: this.response.object_locations,
+          color: "",
         }
 
-        this.consoleValue.push(value);
-
         if(this.response.class_names.length > 0){
+          var counter = 0;
+          var suspectDetected: boolean = false;
 
           for (let item of this.response.class_names) {
             this.addToCountedDetectedClasses(item);
-          }
 
-          this.sprayingResult.push(value);
+            var sprayingResultValue = {
+              current_frame_no: this.current_frame_no, 
+              current_area_no: this.current_area_no,
+              class_names: item, 
+              object_locations: this.response.object_locations[counter],
+              color: "",
+              need_to_spray_chemical: false,
+              chemical_name: ""
+            }
+
+            if(item.split("_")[0] == "pest"){
+              sprayingResultValue.color = "red";
+              sprayingResultValue.need_to_spray_chemical = true;
+              sprayingResultValue.chemical_name = "Apply Pest Control Chemical"
+              suspectDetected = true;
+
+              consoleValue.color = "red";
+            }
+            else if(item.split("_")[0] == "weed"){
+              sprayingResultValue.color = "red";
+              sprayingResultValue.need_to_spray_chemical = true;
+              sprayingResultValue.chemical_name = "Apply Weed Control Chemical"
+              suspectDetected = true;
+
+              consoleValue.color = "red";
+            }
+            else if(item.split("_")[0] == "disease"){
+              sprayingResultValue.color = "red";
+              sprayingResultValue.need_to_spray_chemical = true;
+              sprayingResultValue.chemical_name = "Apply Disease Control Chemical"
+              suspectDetected = true;
+
+              consoleValue.color = "red";
+            }
+            else{
+              sprayingResultValue.color = "green";
+              sprayingResultValue.need_to_spray_chemical = false;
+              sprayingResultValue.chemical_name = ""
+
+              if(!suspectDetected){
+                consoleValue.color = "green";
+              }
+            }
+
+            this.sprayingResult.push(sprayingResultValue);
+            counter = counter + 1;
+          }
         }
 
-        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+        this.consoleValue.push(consoleValue);
+
+        this.scrollToBottom();
       }, (error) => {
         console.error('API Error:', error);
       });

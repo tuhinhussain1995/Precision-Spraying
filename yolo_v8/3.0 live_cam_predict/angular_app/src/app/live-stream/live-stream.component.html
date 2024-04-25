@@ -30,10 +30,10 @@
                     
                     <span *ngIf="console.class_names">
                         <p class="console-style">Class Names: 
-                            <span *ngIf="console.class_names == 'pest_grasshopper'" style="color: red; font-weight: bold;">
+                            <span *ngIf="console.class_names == 'pest_grasshopper'" style="font-weight: bold;" [style.color]="console.color">
                                 {{ console.class_names }}
                             </span>
-                            <span *ngIf="console.class_names != 'pest_grasshopper'" style="color: green;">
+                            <span *ngIf="console.class_names != 'pest_grasshopper'"  [style.color]="console.color">
                                 {{ console.class_names }}
                             </span>
                         </p>
@@ -72,15 +72,15 @@
         </mat-card>
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
             <div class="overlay">Precision Spraying Result</div>
-            <div *ngIf="responseReceived" style="margin: auto;" #scrollContainer class="spraying-result-div">
+            <div *ngIf="responseReceived" style="margin: auto;" #scrollContainer1 class="spraying-result-div">
                 <span *ngFor="let console of sprayingResult">
                     <p class="spraying-console-style">Current Frame No: {{ console.current_frame_no }}</p>
                     <p class="spraying-console-style">Current Area No: {{ console.current_area_no }}</p>
                     <p class="spraying-console-style">Class Names: 
-                        <span *ngIf="console.class_names == 'pest_grasshopper'" style="color: red; font-weight: bold;">
+                        <span *ngIf="console.class_names == 'pest_grasshopper'" style="font-weight: bold;" [style.color]="console.color">
                             {{ console.class_names }}
                         </span>
-                        <span *ngIf="console.class_names != 'pest_grasshopper'" style="color: green;">
+                        <span *ngIf="console.class_names != 'pest_grasshopper'" [style.color]="console.color">
                             {{ console.class_names }}
                         </span>
                     </p>
