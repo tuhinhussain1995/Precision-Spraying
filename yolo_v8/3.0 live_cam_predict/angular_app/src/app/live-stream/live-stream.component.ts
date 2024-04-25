@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked, OnInit  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 interface CountedItem {
@@ -9,7 +9,7 @@ interface CountedItem {
   templateUrl: './live-stream.component.html',
   styleUrls: ['./live-stream.component.scss']
 })
-export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
+export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit  {
   imageUrl: string = "";
   response: any;
   responseReceived: boolean = false;
@@ -38,6 +38,9 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
 
   chatgptConsultant: boolean = false;
 
+  dotVisible: boolean = false;
+  blinkInterval: any;
+
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
   @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
 
@@ -48,6 +51,9 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
     });
 
     this.detection_started_time = new Date();
+  }
+
+  ngOnInit(): void {
   }
 
   ngAfterViewInit() {
@@ -69,12 +75,14 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
     this.stopCamera();
     this.onProcess = false;
     clearInterval(this.intervalId);
+    this.stopBlinking();
   }
 
   startProcess() {
     this.onProcess = true;
     this.startCamera();
     this.chatgptConsultant = false;
+    this.startBlinking();
 
     setTimeout(() => {
       this.startInterval();
@@ -100,6 +108,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
     clearInterval(this.intervalId);
     this.detection_end_time = new Date();
     this.chatgptConsultant = true;
+    this.stopBlinking();
 
     if (this.stream) {
       this.stream.getTracks().forEach(track => {
@@ -243,5 +252,16 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
 
   getKey(item: CountedItem): string {
     return Object.keys(item)[0];
+  }
+
+  startBlinking(): void {
+    this.blinkInterval = setInterval(() => {
+      this.dotVisible = !this.dotVisible;
+    }, 1000);
+  }
+
+  stopBlinking(): void {
+    clearInterval(this.blinkInterval);
+    this.dotVisible = false;
   }
 }

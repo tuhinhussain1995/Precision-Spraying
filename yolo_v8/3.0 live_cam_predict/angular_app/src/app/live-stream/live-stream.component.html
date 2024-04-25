@@ -1,7 +1,11 @@
 <div style="width: 100%;" [style.height]="screenHeight">
     <div style="height: 45%;">
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; position: relative;">
-            <div class="overlay">Live Cam</div>
+            <div class="overlay">
+                <span class="blinking-dot" [style.visibility]="dotVisible ? 'visible' : 'hidden'"></span>
+                Live Cam
+              </div>
+              
             <video #video autoplay playsinline height="100%"></video>
             <canvas #canvas id="canvas" style="display: none;"></canvas>
         </mat-card>
