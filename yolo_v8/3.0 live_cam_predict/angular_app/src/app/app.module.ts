@@ -6,11 +6,12 @@ import { AppComponent } from './app.component';
 import { ImageComponent } from './image/image.component';
 import { VideoComponent } from './video/video.component';
 import { LiveStreamComponent } from './live-stream/live-stream.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatTabsModule,
     MatSlideToggleModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    FormsModule
   ],
   providers: [
     provideAnimationsAsync()
