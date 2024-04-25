@@ -36,6 +36,8 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
   detection_end_time: any = "";
   countedDetectedClasses: any[] = [];
 
+  chatgptConsultant: boolean = false;
+
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
   @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
 
@@ -72,6 +74,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
   startProcess() {
     this.onProcess = true;
     this.startCamera();
+    this.chatgptConsultant = false;
 
     setTimeout(() => {
       this.startInterval();
@@ -96,6 +99,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked {
     this.onProcess = false;
     clearInterval(this.intervalId);
     this.detection_end_time = new Date();
+    this.chatgptConsultant = true;
 
     if (this.stream) {
       this.stream.getTracks().forEach(track => {

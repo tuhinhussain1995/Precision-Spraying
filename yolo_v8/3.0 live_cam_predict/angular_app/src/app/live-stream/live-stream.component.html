@@ -113,9 +113,16 @@
         </mat-card>
     </div>
 
-    <div style="height: calc(10% - 15px);">
-        <button *ngIf="!onProcess" (click)="startProcess()">Take Picture</button>
-        <button *ngIf="onProcess" (click)="stopCamera()">Stop Camera</button>
+    <div style="height: calc(10% - 15px); padding-top: 20px !important;">
+        <button *ngIf="!onProcess" (click)="startProcess()" mat-flat-button color="primary">
+            <mat-icon>videocam</mat-icon> Start Live Streaming
+        </button>
+        
+        <button *ngIf="onProcess" (click)="stopCamera()" mat-flat-button color="warn">
+            <mat-icon>videocam_off</mat-icon> Stop Live Streaming
+        </button>
+
+        <button *ngIf="chatgptConsultant" mat-flat-button color="accent" style="margin-left: 10px;">Take ChatGPT's Consultant</button>
     </div>
 </div>
 
