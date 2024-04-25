@@ -10,11 +10,23 @@ export class LiveStreamComponent {
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   videoElement!: HTMLVideoElement;
 
-  constructor() {}
+  constructor() {
+
+  }
 
   ngAfterViewInit() {
     this.videoElement = this.video.nativeElement;
+  }
 
+  startProcess(){
+    this.startCamera();
+
+    setTimeout(() =>{
+      this.takePicture();
+    },1000);
+  }
+
+  startCamera() {
     navigator.mediaDevices
       .getUserMedia({
         video: { facingMode: 'environment' },
