@@ -27,7 +27,14 @@
                 <span *ngFor="let console of consoleValue">
                     <p class="console-style">Current Frame No: {{ console.current_frame_no }}</p>
                     <p class="console-style">Current Area No: {{ console.current_area_no }}</p>
-                    <p class="console-style">Class Names: {{ console.class_names }}</p>
+                    <p class="console-style">Class Names: 
+                        <span *ngIf="console.class_names == 'pest_grasshopper'" style="color: red; font-weight: bold;">
+                            {{ console.class_names }}
+                        </span>
+                        <span *ngIf="console.class_names != 'pest_grasshopper'" style="color: green;">
+                            {{ console.class_names }}
+                        </span>
+                    </p>
                     <p class="console-style">Object Locations: 
                         <span *ngIf="console.object_locations.length > 1">
                             <span *ngFor="let location of console.object_locations">
