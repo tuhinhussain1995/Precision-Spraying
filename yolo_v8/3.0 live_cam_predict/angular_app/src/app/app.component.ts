@@ -12,7 +12,9 @@ export class AppComponent {
 
   constructor(private http: HttpClient,
     private router: Router
-  ) { }
+  ) { 
+    this.router.navigateByUrl('/image');
+  }
 
   tabChanged(event: MatTabChangeEvent) {
     switch(event.index) {

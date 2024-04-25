@@ -19,7 +19,9 @@ export class LiveStreamComponent implements OnDestroy {
 
   current_frame_no: number = 0;
   current_area_no: number = 0;
+
   consoleValue: any = [];
+  sprayingResult: any = [];
   
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
@@ -123,23 +125,24 @@ export class LiveStreamComponent implements OnDestroy {
 
         this.current_area_no = this.current_area_no + 1;
         this.current_frame_no = this.current_frame_no + 1;
+        this.total_area_covered = (1*this.current_area_no) + " Square Meters";
+
+        var value = {
+          current_frame_no: this.current_frame_no, 
+          current_area_no: this.current_area_no,
+          class_names: this.response.class_names, 
+          object_locations: this.response.object_locations
+        }
+
+        this.consoleValue.push(value);
 
         if(this.response.class_names.length > 0){
-
-          this.total_area_covered = (1*this.current_area_no) + " Square Meters";
-
-          var value = {
-            current_frame_no: this.current_frame_no, 
-            current_area_no: this.current_area_no,
-            class_names: this.response.class_names, 
-            object_locations: this.response.object_locations
-          }
 
           for (let item of this.response.class_names) {
             this.addToCountedDetectedClasses(item);
           }
 
-          this.consoleValue.push(value);
+          this.sprayingResult.push(value);
         }
 
         this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;

@@ -27,24 +27,32 @@
                 <span *ngFor="let console of consoleValue">
                     <p class="console-style">Current Frame No: {{ console.current_frame_no }}</p>
                     <p class="console-style">Current Area No: {{ console.current_area_no }}</p>
-                    <p class="console-style">Class Names: 
-                        <span *ngIf="console.class_names == 'pest_grasshopper'" style="color: red; font-weight: bold;">
-                            {{ console.class_names }}
-                        </span>
-                        <span *ngIf="console.class_names != 'pest_grasshopper'" style="color: green;">
-                            {{ console.class_names }}
-                        </span>
-                    </p>
-                    <p class="console-style">Object Locations: 
-                        <span *ngIf="console.object_locations.length > 1">
-                            <span *ngFor="let location of console.object_locations">
-                                [{{ location }}],
+                    
+                    <span *ngIf="console.class_names">
+                        <p class="console-style">Class Names: 
+                            <span *ngIf="console.class_names == 'pest_grasshopper'" style="color: red; font-weight: bold;">
+                                {{ console.class_names }}
                             </span>
-                        </span>
-                        <span *ngIf="console.object_locations.length == 1">
-                            [{{ console.object_locations }}]
-                        </span>
-                    </p>
+                            <span *ngIf="console.class_names != 'pest_grasshopper'" style="color: green;">
+                                {{ console.class_names }}
+                            </span>
+                        </p>
+                        <p class="console-style">Object Locations: 
+                            <span *ngIf="console.object_locations.length > 1">
+                                <span *ngFor="let location of console.object_locations">
+                                    [{{ location }}],
+                                </span>
+                            </span>
+                            <span *ngIf="console.object_locations.length == 1">
+                                [{{ console.object_locations }}]
+                            </span>
+                        </p>
+                    </span>
+
+                    <span *ngIf="!console.class_names">
+                        <p class="console-style">Nothing Detected</p>
+                    </span>
+
                     <hr>
                 </span>
             </div>
@@ -64,9 +72,30 @@
         </mat-card>
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
             <div class="overlay">Precision Spraying Result</div>
-            <div *ngIf="responseReceived">
-                <p>Class Names: {{ response.class_names }}</p>
-                <p>Object Locations: {{ response.object_locations }}</p>
+            <div *ngIf="responseReceived" style="margin: auto;" #scrollContainer class="spraying-result-div">
+                <span *ngFor="let console of sprayingResult">
+                    <p class="spraying-console-style">Current Frame No: {{ console.current_frame_no }}</p>
+                    <p class="spraying-console-style">Current Area No: {{ console.current_area_no }}</p>
+                    <p class="spraying-console-style">Class Names: 
+                        <span *ngIf="console.class_names == 'pest_grasshopper'" style="color: red; font-weight: bold;">
+                            {{ console.class_names }}
+                        </span>
+                        <span *ngIf="console.class_names != 'pest_grasshopper'" style="color: green;">
+                            {{ console.class_names }}
+                        </span>
+                    </p>
+                    <p class="spraying-console-style">Object Locations: 
+                        <span *ngIf="console.object_locations.length > 1">
+                            <span *ngFor="let location of console.object_locations">
+                                [{{ location }}],
+                            </span>
+                        </span>
+                        <span *ngIf="console.object_locations.length == 1">
+                            [{{ console.object_locations }}]
+                        </span>
+                    </p>
+                    <hr>
+                </span>
             </div>
         </mat-card>
     </div>
