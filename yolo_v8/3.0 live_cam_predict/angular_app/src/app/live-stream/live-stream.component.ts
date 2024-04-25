@@ -1,6 +1,9 @@
 import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+interface CountedItem {
+  [key: string]: number;
+}
 @Component({
   selector: 'app-live-stream',
   templateUrl: './live-stream.component.html',
@@ -24,8 +27,12 @@ export class LiveStreamComponent implements OnDestroy {
   stream!: MediaStream | null;
 
   intervalId: any;
-
   screenHeight: any = "";
+
+  detection_started_time: any = "";
+  total_area_covered: any = "";
+  detection_end_time: any = "";
+  countedDetectedClasses: any[] = [];
 
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
 
@@ -34,6 +41,8 @@ export class LiveStreamComponent implements OnDestroy {
     window.addEventListener('resize', () => {
       this.screenHeight = (window.innerHeight - 120) + 'px';
     });
+
+    this.detection_started_time = new Date();
   }
 
   ngAfterViewInit() {
@@ -72,6 +81,7 @@ export class LiveStreamComponent implements OnDestroy {
   stopCamera() {
     this.onProcess = false;
     clearInterval(this.intervalId);
+    this.detection_end_time = new Date();
 
     if (this.stream) {
       this.stream.getTracks().forEach(track => {
@@ -115,11 +125,17 @@ export class LiveStreamComponent implements OnDestroy {
           this.current_area_no = this.current_area_no + 1;
           this.current_frame_no = this.current_area_no + 1;
 
+          this.total_area_covered = (1*this.current_area_no) + " Square Meters";
+
           var value = {
             current_frame_no: this.current_frame_no, 
             current_area_no: this.current_area_no,
             class_names: this.response.class_names, 
             object_locations: this.response.object_locations
+          }
+
+          for (let item of this.response.class_names) {
+            this.addToCountedDetectedClasses(item);
           }
 
           this.consoleValue.push(value);
@@ -139,5 +155,21 @@ export class LiveStreamComponent implements OnDestroy {
         this.stopCamera();
       }
     }, 1000);
+  }
+
+  addToCountedDetectedClasses(itemName: string): void {
+    const index = this.countedDetectedClasses.findIndex(item => item[itemName] !== undefined);
+
+    if (index !== -1) {
+        this.countedDetectedClasses[index][itemName]++;
+    } else {
+        const newItem: CountedItem = {};
+        newItem[itemName] = 1;
+        this.countedDetectedClasses.push(newItem);
+    }
+  }
+
+  getKey(item: CountedItem): string {
+    return Object.keys(item)[0];
   }
 }

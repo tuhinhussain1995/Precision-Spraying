@@ -50,14 +50,17 @@
         </mat-card>
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
             <div class="overlay">Detection Overall Result</div>
-            <div *ngIf="responseReceived" style="margin: auto;">
-                <p>Class Names: {{ response.class_names }}</p>
-                <p>Object Locations: {{ response.object_locations }}</p>
+            <div *ngIf="responseReceived"  class="overall-result-div">
+                <p>Started at: {{ detection_started_time | date:'medium' }}</p>
+
+                <div *ngFor="let item of countedDetectedClasses">
+                    <p>{{ getKey(item) }}: {{ item[getKey(item)] }}</p>
+                </div>
             </div>
         </mat-card>
         <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
             <div class="overlay">Precision Spraying Result</div>
-            <div *ngIf="responseReceived" style="margin: auto;">
+            <div *ngIf="responseReceived">
                 <p>Class Names: {{ response.class_names }}</p>
                 <p>Object Locations: {{ response.object_locations }}</p>
             </div>
