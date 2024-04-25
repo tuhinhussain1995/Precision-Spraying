@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-live-stream',
@@ -6,12 +7,20 @@ import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
   styleUrls: ['./live-stream.component.scss']
 })
 export class LiveStreamComponent implements OnDestroy {
+  imageUrl: string = "";
+  response: any;
+  responseReceived: boolean = false;
+
+  onProcess: boolean = false;
+  
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   videoElement!: HTMLVideoElement;
   stream!: MediaStream | null;
 
-  constructor() {}
+  intervalId: any;
+
+  constructor(private http: HttpClient) {}
 
   ngAfterViewInit() {
     this.videoElement = this.video.nativeElement;
@@ -19,13 +28,16 @@ export class LiveStreamComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.stopCamera();
+    this.onProcess = false;
+    clearInterval(this.intervalId);
   }
 
   startProcess() {
+    this.onProcess = true;
     this.startCamera();
 
     setTimeout(() => {
-      this.takePicture();
+      this.startInterval();
     }, 1000);
   }
 
@@ -44,6 +56,9 @@ export class LiveStreamComponent implements OnDestroy {
   }
 
   stopCamera() {
+    this.onProcess = false;
+    clearInterval(this.intervalId);
+
     if (this.stream) {
       this.stream.getTracks().forEach(track => {
         track.stop();
@@ -63,9 +78,34 @@ export class LiveStreamComponent implements OnDestroy {
 
       // Convert the canvas content to a base64 string
       const base64ImageData = canvasElement.toDataURL('image/png').split(',')[1]; // Extract base64 string after comma
-      console.log('Base64 Image:', base64ImageData);
+      
+      this.callApi(base64ImageData);
     } else {
       console.error('Video element or canvas context is not initialized.');
     }
+  }
+
+  callApi(base64String: string): void {
+    const apiUrl = 'http://localhost:5000/process_image';
+
+    this.http.post(apiUrl, { image: base64String })
+      .subscribe((res: any) => {
+        this.response = res;
+        this.responseReceived = true;
+
+        this.imageUrl = 'data:image/jpeg;base64,' + res.img_bytes; // Assuming the image is JPEG format
+      }, (error) => {
+        console.error('API Error:', error);
+      });
+  }
+
+  startInterval() {
+    this.intervalId = setInterval(() => {
+      this.takePicture();
+
+      if (!this.onProcess) {
+        this.stopCamera();
+      }
+    }, 1000);
   }
 }

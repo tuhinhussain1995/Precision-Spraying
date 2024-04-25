@@ -1,4 +1,9 @@
 <video #video autoplay playsinline style="display: none;"></video>
 <canvas #canvas id="canvas" style="display: none;"></canvas>
-<button (click)="startProcess()">Take Picture</button>
-<button (click)="stopCamera()">Stop Camera</button>
+
+<button *ngIf="!onProcess" (click)="startProcess()">Take Picture</button>
+<button *ngIf="onProcess" (click)="stopCamera()">Stop Camera</button>
+
+<span *ngIf="responseReceived">
+    <img [src]="imageUrl" alt="Uploaded Image" class="img-fluid">
+</span>
