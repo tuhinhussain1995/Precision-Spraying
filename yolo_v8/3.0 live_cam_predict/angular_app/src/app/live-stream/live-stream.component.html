@@ -1,20 +1,24 @@
 <div style="width: 100%;" [style.height]="screenHeight">
     <div style="height: 45%;">
-        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left;">
+        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; position: relative;">
+            <div class="overlay">Live Cam</div>
             <video #video autoplay playsinline height="100%"></video>
             <canvas #canvas id="canvas" style="display: none;"></canvas>
         </mat-card>
-        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px;">
+        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
+            <div class="overlay">Captured Image</div>
             <div *ngIf="responseReceived" style="margin: auto;">
                 <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image" height="100%" width="100%">
             </div>
         </mat-card>
-        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px;">
+        <mat-card style="height: 100%; width: calc(33.33% - 10px); float: left; margin-left: 15px; position: relative;">
+            <div class="overlay">Detected Pests/Diseases/Weeds</div>
             <div *ngIf="responseReceived" style="margin: auto;">
                 <img [src]="imageUrl" alt="Uploaded Image" height="100%" width="100%">
             </div>
         </mat-card>
     </div>
+    
 
     <div style="height: 45%; margin-top: 15px;">
         <div style="height: 100%; width: calc(50% - 7px); float: left;">
