@@ -45,6 +45,7 @@
                             [{{ console.object_locations }}]
                         </span>
                     </p>
+                    <hr>
                 </span>
             </div>
         </mat-card>
@@ -52,7 +53,10 @@
             <div class="overlay">Detection Overall Result</div>
             <div *ngIf="responseReceived"  class="overall-result-div">
                 <p>Started at: {{ detection_started_time | date:'medium' }}</p>
-
+                <p>Current Frame No: {{ current_frame_no }}</p>
+                <p>Total Area Covered: {{ total_area_covered }}</p>
+                <p *ngIf="detection_end_time">Ended at: {{ detection_end_time | date:'medium' }}</p>
+                <hr>
                 <div *ngFor="let item of countedDetectedClasses">
                     <p>{{ getKey(item) }}: {{ item[getKey(item)] }}</p>
                 </div>

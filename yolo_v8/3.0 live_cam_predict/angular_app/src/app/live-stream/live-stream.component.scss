@@ -34,6 +34,7 @@
     border-radius: 5px;
     font-family: 'Courier New', Courier, monospace;
     line-height: normal;
+    padding-top: 35px;
 }
 
 .console-style {
@@ -70,7 +71,7 @@
 .overall-result-div {
     width: 100%;
     height: 100%;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
     font-size: 15px;
     background-color: #7e7878;
@@ -80,4 +81,28 @@
     font-family: 'Courier New', Courier, monospace;
     line-height: normal;
     padding-top: 35px;
+}
+
+.overall-result-div::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the handle */
+    border-radius: 5px; /* Round the scrollbar thumb */
+}
+
+.overall-result-div::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+/* Track */
+.overall-result-div::-webkit-scrollbar-track {
+    background: #e0dada; /* Color of the track */
+}
+
+/* Handle */
+.overall-result-div::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the handle */
+}
+
+/* Buttons (arrows) */
+.overall-result-div::-webkit-scrollbar-button {
+    background: #ccc; /* Color of the buttons */
 }

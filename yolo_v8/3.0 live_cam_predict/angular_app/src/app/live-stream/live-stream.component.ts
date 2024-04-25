@@ -121,9 +121,10 @@ export class LiveStreamComponent implements OnDestroy {
 
         this.imageUrl = 'data:image/jpeg;base64,' + res.img_bytes; // Assuming the image is JPEG format
 
+        this.current_area_no = this.current_area_no + 1;
+        this.current_frame_no = this.current_frame_no + 1;
+
         if(this.response.class_names.length > 0){
-          this.current_area_no = this.current_area_no + 1;
-          this.current_frame_no = this.current_area_no + 1;
 
           this.total_area_covered = (1*this.current_area_no) + " Square Meters";
 
