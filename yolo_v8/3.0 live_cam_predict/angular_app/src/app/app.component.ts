@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -8,12 +8,25 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
+
+  totalRows: number = 22;
+  totalColumns: number = 12;
+  rowsArray: number[] = Array.from({ length: this.totalRows }, (_, i) => i);
+  columnsArray: number[] = Array.from({ length: this.totalColumns }, (_, i) => i);
+  boxValues: number[][] = Array.from({ length: this.totalRows }, () => Array(this.totalColumns).fill(null)); // Initialize an empty array for box values
+  intervalId: any;
 
   constructor(private http: HttpClient,
     private router: Router
   ) { 
-    this.router.navigateByUrl('/image');
+    this.router.navigateByUrl('/image'); 
+  }
+
+  ngOnInit() {
+    this.intervalId = setInterval(() => {
+      this.updateRandomBox();
+    }, 1000); // Interval set to 1 second (1000 milliseconds)
   }
 
   tabChanged(event: MatTabChangeEvent) {
@@ -30,5 +43,26 @@ export class AppComponent {
       default:
         break;
     }
+  }
+
+  updateRandomBox() {
+    const randomRow = Math.floor(Math.random() * this.totalRows);
+    const randomCol = Math.floor(Math.random() * this.totalColumns);
+    const randomValue = Math.floor(Math.random() * 10) + 1; // Random value between 1 and 10
+    this.boxValues[randomRow][randomCol] = randomValue;
+  }
+
+  getBoxColor(value: number): string {
+    // Define the range of colors from cold to hot
+    const colors = ['#6495ED', '#7FFFD4', '#ADFF2F', '#97970e', '#FFD700', '#FFA500', '#FF6347', '#FF4500', '#FF0000', '#8B0000'];
+    // Map the value to the index of colors array
+    const index = Math.min(value - 1, colors.length - 1);
+    return colors[index];
+  }
+  
+  
+
+  ngOnDestroy() {
+    clearInterval(this.intervalId); // Clear the interval when the component is destroyed
   }
 }

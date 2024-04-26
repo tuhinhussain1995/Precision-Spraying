@@ -3,3 +3,25 @@
     --mat-tab-header-active-label-text-color: #000000;
     background-color: #157e4b94;
 }
+
+.table-container {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.custom-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+}
+
+.square-box {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  color: white;
+}

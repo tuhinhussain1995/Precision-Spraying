@@ -20,9 +20,18 @@
         <p style="font-size: 18px;">View Detection Layout</p>
       </mat-card-content>
 
+      <div class="table-container">
+        <table class="custom-table">
+          <tr *ngFor="let row of rowsArray; let i = index">
+            <td *ngFor="let col of columnsArray; let j = index">
+              <div class="square-box" [style.background-color]="getBoxColor(boxValues[i][j])">{{ boxValues[i][j] }}</div>
+            </td>
+          </tr>
+        </table>
+      </div>
       
     </mat-card>
   </div>
-  
+
 </div>
 
