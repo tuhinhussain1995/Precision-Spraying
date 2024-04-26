@@ -125,6 +125,10 @@
         <button *ngIf="onProcess" (click)="stopCamera()" mat-flat-button color="warn">
             <mat-icon>videocam_off</mat-icon> Stop Live Streaming
         </button>
+
+        <button *ngIf="resetWholeProcess" (click)="resetWholeProcessNow()" mat-flat-button color="accent" style="margin-left: 10px;">
+            <mat-icon>restore</mat-icon> Reset Whole Process
+        </button>
     </div>
 </div>
 

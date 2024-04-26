@@ -39,6 +39,8 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   dotVisible: boolean = false;
   blinkInterval: any;
 
+  resetWholeProcess: boolean = false;
+
   @Input() totalRows !: number;
   @Input() totalColumns !: number;
   @Output("updateRandomBox") updateRandomBox: EventEmitter<any> = new EventEmitter();
@@ -89,6 +91,12 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   }
 
   startProcess() {
+    if(this.currentProcessingColumn > this.totalColumns){
+      window.alert('The Detection Process is already Completed');
+      return
+    }
+
+    this.resetWholeProcess = true;
     this.onProcess = true;
     this.startCamera();
     this.startBlinking();
@@ -96,6 +104,10 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
     setTimeout(() => {
       this.startInterval();
     }, 1000);
+  }
+
+  resetWholeProcessNow(){
+    window.location.reload();
   }
 
   startCamera() {
