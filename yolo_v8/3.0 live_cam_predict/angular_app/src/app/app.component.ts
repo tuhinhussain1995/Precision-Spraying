@@ -84,6 +84,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     if (value > 10) {
       return colors[colors.length - 1];
     }
+
+    if (value < 1) {
+      return '#FFFFFF';
+    }
     
     const index = Math.min(value - 1, colors.length - 1);
     return colors[index];
