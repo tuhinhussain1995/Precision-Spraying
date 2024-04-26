@@ -29,6 +29,10 @@ export class AppComponent implements OnInit, OnDestroy {
     }, 1000); // Interval set to 1 second (1000 milliseconds)
   }
 
+  ngOnDestroy() {
+    clearInterval(this.intervalId); // Clear the interval when the component is destroyed
+  }
+
   tabChanged(event: MatTabChangeEvent) {
     switch(event.index) {
       case 0:
@@ -53,16 +57,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   getBoxColor(value: number): string {
-    // Define the range of colors from cold to hot
     const colors = ['#6495ED', '#7FFFD4', '#ADFF2F', '#97970e', '#FFD700', '#FFA500', '#FF6347', '#FF4500', '#FF0000', '#8B0000'];
-    // Map the value to the index of colors array
+    
+    if (value > 10) {
+      return colors[colors.length - 1];
+    }
+    
     const index = Math.min(value - 1, colors.length - 1);
     return colors[index];
-  }
-  
-  
-
-  ngOnDestroy() {
-    clearInterval(this.intervalId); // Clear the interval when the component is destroyed
   }
 }
