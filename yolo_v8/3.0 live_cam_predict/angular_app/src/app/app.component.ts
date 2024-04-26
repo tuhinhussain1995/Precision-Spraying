@@ -10,8 +10,8 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  totalRows: number = 22;
-  totalColumns: number = 12;
+  totalRows: number = 19;
+  totalColumns: number = 10;
   rowsArray: number[] = Array.from({ length: this.totalRows }, (_, i) => i);
   columnsArray: number[] = Array.from({ length: this.totalColumns }, (_, i) => i);
   boxValues: number[][] = Array.from({ length: this.totalRows }, () => Array(this.totalColumns).fill(null)); // Initialize an empty array for box values
