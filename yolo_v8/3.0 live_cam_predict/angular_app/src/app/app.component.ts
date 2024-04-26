@@ -9,18 +9,15 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  totalRows: number = 20;
-  totalColumns: number = 10;
 
-  rows: number[] = Array.from({ length: this.totalRows }, (_, index) => index);
-  columns: number[] = Array.from({ length: this.totalColumns }, (_, index) => index);
-
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient,
+    private router: Router
+  ) { 
     this.router.navigateByUrl('/image');
   }
 
   tabChanged(event: MatTabChangeEvent) {
-    switch (event.index) {
+    switch(event.index) {
       case 0:
         this.router.navigateByUrl('/image');
         break;
