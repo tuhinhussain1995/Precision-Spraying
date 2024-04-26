@@ -11,7 +11,10 @@
       <div style="padding: 15px;">
         <app-image *ngIf="selectedTabIndex === 0"></app-image>
         <app-video *ngIf="selectedTabIndex === 1"></app-video>
-        <app-live-stream *ngIf="selectedTabIndex === 2"></app-live-stream>
+        <app-live-stream *ngIf="selectedTabIndex === 2"
+        [totalRows]="totalRows" 
+        [totalColumns]="totalColumns"
+        ></app-live-stream>
       </div>
     </mat-card>
   </div>

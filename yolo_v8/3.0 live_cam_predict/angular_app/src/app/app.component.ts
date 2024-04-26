@@ -14,7 +14,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   isLiveStreaming: boolean = false;
   leftScreenWidth: string = "calc(100% - 20px)";
 
-  totalRows: number = 19;
+  totalRows: number = 20;
   totalColumns: number = 10;
   rowsArray: number[] = Array.from({ length: this.totalRows }, (_, i) => i);
   columnsArray: number[] = Array.from({ length: this.totalColumns }, (_, i) => i);

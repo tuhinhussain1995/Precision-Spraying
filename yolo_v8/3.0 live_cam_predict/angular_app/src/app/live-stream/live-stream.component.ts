@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked, OnInit  } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked, OnInit, Input   } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 interface CountedItem {
@@ -38,6 +38,13 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   dotVisible: boolean = false;
   blinkInterval: any;
+
+  @Input() totalRows !: number;
+  @Input() totalColumns !: number;
+
+  currentProcessingRow: number = 1;
+  currentProcessingColumn: number = 1;
+  totalColumnCompleted: number = 0;
 
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
   @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
@@ -102,6 +109,17 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   stopCamera() {
     this.onProcess = false;
+    
+    this.currentProcessingColumn = this.currentProcessingColumn + 1;
+    this.totalColumnCompleted = this.totalColumnCompleted + 1;
+
+    if(this.currentProcessingColumn % 2 === 0){
+      this.currentProcessingRow = this.totalRows;
+    }
+    else{
+      this.currentProcessingRow = 1;
+    }
+
     clearInterval(this.intervalId);
     this.detection_end_time = new Date();
     this.stopBlinking();
@@ -226,11 +244,29 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   startInterval() {
     this.intervalId = setInterval(() => {
-      this.takePicture();
-
+      
       if (!this.onProcess) {
         this.stopCamera();
+        return
       }
+
+      if(this.totalRows < this.currentProcessingRow || 1 > this.currentProcessingRow){
+        this.stopCamera();
+        return
+      }
+
+      this.takePicture();
+
+      console.log("$$$$$$$$$$$$$$$$$$");
+      console.log(this.currentProcessingColumn + "," + this.currentProcessingRow)
+
+      if(this.currentProcessingColumn % 2 === 0){
+        this.currentProcessingRow = this.currentProcessingRow - 1;
+      }
+      else{
+        this.currentProcessingRow = this.currentProcessingRow + 1;
+      }
+      
     }, 1000);
   }
 
