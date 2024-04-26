@@ -36,8 +36,6 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   detection_end_time: any = "";
   countedDetectedClasses: any[] = [];
 
-  chatgptConsultant: boolean = false;
-
   dotVisible: boolean = false;
   blinkInterval: any;
 
@@ -81,7 +79,6 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   startProcess() {
     this.onProcess = true;
     this.startCamera();
-    this.chatgptConsultant = false;
     this.startBlinking();
 
     setTimeout(() => {
@@ -107,7 +104,6 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
     this.onProcess = false;
     clearInterval(this.intervalId);
     this.detection_end_time = new Date();
-    this.chatgptConsultant = true;
     this.stopBlinking();
 
     if (this.stream) {
