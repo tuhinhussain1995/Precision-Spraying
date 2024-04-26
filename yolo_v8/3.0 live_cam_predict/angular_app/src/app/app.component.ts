@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit  } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   isLiveStreaming: boolean = false;
   leftScreenWidth: string = "calc(100% - 20px)";
@@ -19,6 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
   columnsArray: number[] = Array.from({ length: this.totalColumns }, (_, i) => i);
   boxValues: number[][] = Array.from({ length: this.totalRows }, () => Array(this.totalColumns).fill(null)); // Initialize an empty array for box values
   intervalId: any;
+
+  @ViewChild(MatTabGroup) tabGroup !: MatTabGroup;
 
   constructor(private http: HttpClient,
     private router: Router
@@ -32,6 +35,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       this.updateRandomBox();
     }, 1000); // Interval set to 1 second (1000 milliseconds)
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.tabGroup) {
+        this.tabGroup.selectedIndex = 2;
+      }
+    });
   }
 
   ngOnDestroy() {
