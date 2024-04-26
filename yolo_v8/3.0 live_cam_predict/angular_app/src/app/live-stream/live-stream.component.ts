@@ -18,7 +18,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   onProcess: boolean = false;
 
   current_frame_no: number = 0;
-  current_area_no: number = 0;
+  current_area_no: string = "";
 
   consoleValue: any = [];
   sprayingResult: any = [];
@@ -162,9 +162,9 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
         this.imageUrl = 'data:image/jpeg;base64,' + res.img_bytes; // Assuming the image is JPEG format
 
-        this.current_area_no = this.current_area_no + 1;
+        this.current_area_no = "(" + this.currentProcessingColumn + "," + this.currentProcessingRow + ")";
         this.current_frame_no = this.current_frame_no + 1;
-        this.total_area_covered = (1*this.current_area_no) + " Square Meters";
+        this.total_area_covered = (1*this.current_frame_no) + " Square Meters";
 
         var consoleValue = {
           current_frame_no: this.current_frame_no, 
@@ -234,6 +234,16 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
           }
         }
 
+        console.log("$$$$$$$$$$$$$$$$$$");
+        console.log(this.currentProcessingColumn + "," + this.currentProcessingRow)
+
+        if(this.currentProcessingColumn % 2 === 0){
+          this.currentProcessingRow = this.currentProcessingRow - 1;
+        }
+        else{
+          this.currentProcessingRow = this.currentProcessingRow + 1;
+        }
+
         this.consoleValue.push(consoleValue);
 
         this.scrollToBottom();
@@ -256,17 +266,6 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
       }
 
       this.takePicture();
-
-      console.log("$$$$$$$$$$$$$$$$$$");
-      console.log(this.currentProcessingColumn + "," + this.currentProcessingRow)
-
-      if(this.currentProcessingColumn % 2 === 0){
-        this.currentProcessingRow = this.currentProcessingRow - 1;
-      }
-      else{
-        this.currentProcessingRow = this.currentProcessingRow + 1;
-      }
-      
     }, 1000);
   }
 
