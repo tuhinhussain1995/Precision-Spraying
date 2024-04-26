@@ -239,10 +239,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
           }
         }
 
-        console.log("$$$$$$$$$$$$$$$$$$");
-        console.log(this.currentProcessingColumn + "," + this.currentProcessingRow)
-
-        this.triggerUpdate(this.currentProcessingRow-1, this.currentProcessingColumn-1, 6);
+        this.triggerUpdate(this.currentProcessingRow-1, this.currentProcessingColumn-1, this.response.class_names.length);
 
         if(this.currentProcessingColumn % 2 === 0){
           this.currentProcessingRow = this.currentProcessingRow - 1;
