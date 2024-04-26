@@ -23,6 +23,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   @ViewChild(MatTabGroup) tabGroup !: MatTabGroup;
 
+  selectedTabIndex: number = 0;
+
   constructor(private http: HttpClient,
     private router: Router
   ) { 
@@ -50,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   tabChanged(event: MatTabChangeEvent) {
+    this.selectedTabIndex = event.index;
     switch(event.index) {
       case 0:
         this.router.navigateByUrl('/image');

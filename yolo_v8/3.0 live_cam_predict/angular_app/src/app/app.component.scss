@@ -25,3 +25,29 @@
   border-radius: 5px;
   color: white;
 }
+
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the handle */
+  border-radius: 5px; /* Round the scrollbar thumb */
+}
+
+.table-container::-webkit-scrollbar {
+  height: 10px;
+  width: 10px; /* Width of the scrollbar */
+}
+
+/* Track */
+.table-container::-webkit-scrollbar-track {
+  background: #e0dada; /* Color of the track */
+}
+
+/* Handle */
+.table-container::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the handle */
+}
+
+/* Buttons (arrows) */
+.table-container::-webkit-scrollbar-button {
+  background: #ccc; /* Color of the buttons */
+}

@@ -59,7 +59,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   }
 
   ngAfterViewChecked() {        
-    this.scrollToBottom();        
+    //this.scrollToBottom();        
   } 
 
   scrollToBottom(): void {
