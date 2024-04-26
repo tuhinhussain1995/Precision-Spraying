@@ -14,6 +14,7 @@
         <app-live-stream *ngIf="selectedTabIndex === 2"
         [totalRows]="totalRows" 
         [totalColumns]="totalColumns"
+        (updateRandomBox)="updateRandomBox($event.randomRow, $event.randomCol, $event.randomValue)"
         ></app-live-stream>
       </div>
     </mat-card>

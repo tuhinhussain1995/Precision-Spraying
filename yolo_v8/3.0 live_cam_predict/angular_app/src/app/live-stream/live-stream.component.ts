@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked, OnInit, Input   } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 interface CountedItem {
@@ -41,6 +41,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   @Input() totalRows !: number;
   @Input() totalColumns !: number;
+  @Output("updateRandomBox") updateRandomBox: EventEmitter<any> = new EventEmitter();
 
   currentProcessingRow: number = 1;
   currentProcessingColumn: number = 1;
@@ -81,6 +82,10 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
     this.onProcess = false;
     clearInterval(this.intervalId);
     this.stopBlinking();
+  }
+
+  triggerUpdate(randomRow: number, randomCol: number, randomValue: number) {
+    this.updateRandomBox.emit({ randomRow, randomCol, randomValue });
   }
 
   startProcess() {
@@ -236,6 +241,8 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
         console.log("$$$$$$$$$$$$$$$$$$");
         console.log(this.currentProcessingColumn + "," + this.currentProcessingRow)
+
+        this.triggerUpdate(this.currentProcessingRow-1, this.currentProcessingColumn-1, 6);
 
         if(this.currentProcessingColumn % 2 === 0){
           this.currentProcessingRow = this.currentProcessingRow - 1;

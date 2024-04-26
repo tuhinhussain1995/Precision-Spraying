@@ -14,12 +14,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   isLiveStreaming: boolean = false;
   leftScreenWidth: string = "calc(100% - 20px)";
 
-  totalRows: number = 20;
+  totalRows: number = 19;
   totalColumns: number = 10;
   rowsArray: number[] = Array.from({ length: this.totalRows }, (_, i) => i);
   columnsArray: number[] = Array.from({ length: this.totalColumns }, (_, i) => i);
-  boxValues: number[][] = Array.from({ length: this.totalRows }, () => Array(this.totalColumns).fill(null)); // Initialize an empty array for box values
-  intervalId: any;
+  boxValues: number[][] = Array.from({ length: this.totalRows }, () => Array(this.totalColumns).fill(null));
 
   @ViewChild(MatTabGroup) tabGroup !: MatTabGroup;
 
@@ -34,9 +33,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   ngOnInit() {
-    this.intervalId = setInterval(() => {
-      this.updateRandomBox();
-    }, 1000); // Interval set to 1 second (1000 milliseconds)
   }
 
   ngAfterViewInit() {
@@ -48,7 +44,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   ngOnDestroy() {
-    clearInterval(this.intervalId); // Clear the interval when the component is destroyed
+    
   }
 
   tabChanged(event: MatTabChangeEvent) {
@@ -74,17 +70,14 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     }
   }
 
-  updateRandomBox() {
-    const randomRow = Math.floor(Math.random() * this.totalRows);
-    const randomCol = Math.floor(Math.random() * this.totalColumns);
-    const randomValue = Math.floor(Math.random() * 10) + 1; // Random value between 1 and 10
+  updateRandomBox(randomRow: number, randomCol: number, randomValue: number) {
     this.boxValues[randomRow][randomCol] = randomValue;
   }
 
   getBoxColor(value: number): string {
-    const colors = ['#6495ED', '#7FFFD4', '#ADFF2F', '#97970e', '#FFD700', '#FFA500', '#FF6347', '#FF4500', '#FF0000', '#8B0000'];
+    const colors = ['#6495ED', '#FFA500', '#FF4500', '#FF0000'];
     
-    if (value > 10) {
+    if (value > 4) {
       return colors[colors.length - 1];
     }
 
