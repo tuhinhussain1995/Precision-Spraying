@@ -10,6 +10,9 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  isLiveStreaming: boolean = false;
+  leftScreenWidth: string = "calc(100% - 20px)";
+
   totalRows: number = 19;
   totalColumns: number = 10;
   rowsArray: number[] = Array.from({ length: this.totalRows }, (_, i) => i);
@@ -20,7 +23,9 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient,
     private router: Router
   ) { 
-    this.router.navigateByUrl('/image'); 
+    this.router.navigateByUrl('/live-stream'); 
+    this.isLiveStreaming = true;
+    this.leftScreenWidth = "72%";
   }
 
   ngOnInit() {
@@ -37,12 +42,18 @@ export class AppComponent implements OnInit, OnDestroy {
     switch(event.index) {
       case 0:
         this.router.navigateByUrl('/image');
+        this.isLiveStreaming = false;
+        this.leftScreenWidth = "calc(100% - 20px)";
         break;
       case 1:
         this.router.navigateByUrl('/video');
+        this.isLiveStreaming = false;
+        this.leftScreenWidth = "calc(100% - 20px)";
         break;
       case 2:
         this.router.navigateByUrl('/live-stream');
+        this.isLiveStreaming = true;
+        this.leftScreenWidth = "72%";
         break;
       default:
         break;
