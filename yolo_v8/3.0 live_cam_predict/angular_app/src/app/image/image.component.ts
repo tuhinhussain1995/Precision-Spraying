@@ -13,7 +13,14 @@ export class ImageComponent {
   response: any;
   responseReceived: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  screenHeight: any = "";
+
+  constructor(private http: HttpClient) { 
+    this.screenHeight = (window.innerHeight - 120) + 'px'; 
+    window.addEventListener('resize', () => {
+      this.screenHeight = (window.innerHeight - 120) + 'px';
+    });
+  }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
