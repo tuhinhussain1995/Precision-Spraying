@@ -58,27 +58,36 @@
 
     <mat-card style="height: 100%; width: calc(50% - 10px); float: left; margin-left: 15px; position: relative;" class="mat-main-card">
         <div class="overlay"><mat-icon style="margin-right: 5px;">video_library</mat-icon>Video</div>
-
+        
         <div>
-          <input type="file" (change)="onFileSelectedForVideo($event)" accept="video/*">
+          <input type="file" (change)="onFileSelectedForVideo($event)" accept="video/*" class="form-control">
         </div>
-        
-        <div *ngIf="videoProcessed">
-          <video controls>
-            <source type="video/mp4" [src]="getVideoUrl()">
-            <source type="video/ogg" [src]="getVideoUrl()">
-            <source type="video/webm" [src]="getVideoUrl()">
-            <source type="video/x-flv" [src]="getVideoUrl()">
-            <source type="video/m4v" [src]="getVideoUrl()">
-            <source type="video/f4v" [src]="getVideoUrl()">
-            <source type="video/f4p" [src]="getVideoUrl()">
-            <source type="video/ogv" [src]="getVideoUrl()">
-            <source type="video/webm" [src]="getVideoUrl()">
-            <source type="video/flv" [src]="getVideoUrl()">
-            <source type="video/avi" [src]="getVideoUrl()">
-          </video>
+
+        <div style="position: relative; width: 100%; height: calc(100% - 10px); float: left; margin-top: 10px;" class="custom-file-label">
+          <span *ngIf="responseReceived">
+            <img [src]="imageUrl" alt="Uploaded Image" height="100%" width="100%">
+          </span>
+
+          <div class="title">
+            <p style="margin: 0;">Predicted Video</p>
+          </div>
+
+          <div *ngIf="videoProcessed" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: black;">
+            <video  width="100%" height="100%" controls>
+              <source type="video/mp4" [src]="getVideoUrl()">
+              <source type="video/ogg" [src]="getVideoUrl()">
+              <source type="video/webm" [src]="getVideoUrl()">
+              <source type="video/x-flv" [src]="getVideoUrl()">
+              <source type="video/m4v" [src]="getVideoUrl()">
+              <source type="video/f4v" [src]="getVideoUrl()">
+              <source type="video/f4p" [src]="getVideoUrl()">
+              <source type="video/ogv" [src]="getVideoUrl()">
+              <source type="video/webm" [src]="getVideoUrl()">
+              <source type="video/flv" [src]="getVideoUrl()">
+              <source type="video/avi" [src]="getVideoUrl()">
+            </video>
+          </div>
         </div>
-        
         
     </mat-card>
   </div>
