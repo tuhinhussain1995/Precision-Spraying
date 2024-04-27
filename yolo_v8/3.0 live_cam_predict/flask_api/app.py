@@ -9,6 +9,7 @@ import base64
 import numpy as np
 import os
 import shutil
+from moviepy.editor import VideoFileClip
 
 app = Flask(__name__)
 api = Api(app)
@@ -98,9 +99,37 @@ def process_uploaded_video():
 
     # Return path to processed video
     processed_video_path = 'C:/Users/tuhin/Desktop/Precision-Spraying/yolo_v8/3.0 live_cam_predict/flask_api/runs/detect/predict/processed_video.avi'
+    output_path = 'C:/Users/tuhin/Desktop/Precision-Spraying/yolo_v8/3.0 live_cam_predict/flask_api/runs/detect/predict/processed_video.mp4'
+
+    convert_video(processed_video_path, output_path)
+
+    base64_video = ""
+
+    try:
+        # Read the video file
+        with open(output_path, 'rb') as f:
+            video_data = f.read()
+
+        # Convert the video data to base64
+        base64_video = base64.b64encode(video_data).decode('utf-8')
+
+    except FileNotFoundError:
+        return jsonify({'error': 'File not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
     # Return processed video
-    return send_file(processed_video_path, as_attachment=True)
+    return jsonify({'base64_video': base64_video})
+
+def convert_video(input_path, output_path, output_format='mp4'):
+    # Load the video clip
+    video_clip = VideoFileClip(input_path)
+    
+    # Set output format and save the video clip
+    video_clip.write_videofile(output_path, codec='libx264', audio_codec='aac', fps=24, preset='ultrafast')
+    
+    # Close the video clip
+    video_clip.close()
 
 if __name__ == '__main__':
     app.run(debug=True)

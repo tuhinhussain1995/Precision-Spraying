@@ -58,6 +58,27 @@
 
     <mat-card style="height: 100%; width: calc(50% - 10px); float: left; margin-left: 15px; position: relative;" class="mat-main-card">
         <div class="overlay"><mat-icon style="margin-right: 5px;">video_library</mat-icon>Video</div>
+
+        <div>
+          <input type="file" (change)="onFileSelectedForVideo($event)" accept="video/*">
+        </div>
+        
+        <div *ngIf="videoProcessed">
+          <video controls>
+            <source type="video/mp4" [src]="getVideoUrl()">
+            <source type="video/ogg" [src]="getVideoUrl()">
+            <source type="video/webm" [src]="getVideoUrl()">
+            <source type="video/x-flv" [src]="getVideoUrl()">
+            <source type="video/m4v" [src]="getVideoUrl()">
+            <source type="video/f4v" [src]="getVideoUrl()">
+            <source type="video/f4p" [src]="getVideoUrl()">
+            <source type="video/ogv" [src]="getVideoUrl()">
+            <source type="video/webm" [src]="getVideoUrl()">
+            <source type="video/flv" [src]="getVideoUrl()">
+            <source type="video/avi" [src]="getVideoUrl()">
+          </video>
+        </div>
+        
         
     </mat-card>
   </div>

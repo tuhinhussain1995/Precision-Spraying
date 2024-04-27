@@ -15,6 +15,9 @@ export class ImageComponent {
 
   screenHeight: any = "";
 
+  videoProcessed: boolean = false;
+  base64Video: string = "";
+
   constructor(private http: HttpClient) { 
     this.screenHeight = (window.innerHeight - 120) + 'px'; 
     window.addEventListener('resize', () => {
@@ -52,4 +55,28 @@ export class ImageComponent {
         console.error('API Error:', error);
       });
   }
+
+  onFileSelectedForVideo(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('video', file);
+
+      this.http.post<any>('http://localhost:5000/process_video', formData)
+        .subscribe(
+          response => {
+            this.base64Video = response.base64_video;
+            this.videoProcessed = true;
+          },
+          error => {
+            console.error('Error processing video:', error);
+          }
+        );
+    }
+  }
+
+  getVideoUrl(): string {
+    return 'data:video/mp4;base64,' + this.base64Video;
+  }
+
 }
