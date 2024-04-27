@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.router.navigateByUrl('/live-stream'); 
     this.isLiveStreaming = true;
     this.leftScreenWidth = "72%";
+    this.updateAreaAfteTab();
   }
 
   ngOnInit() {
@@ -55,11 +56,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.router.navigateByUrl('/image');
         this.isLiveStreaming = false;
         this.leftScreenWidth = "calc(100% - 20px)";
+        this.updateAreaAfteTab();
         break;
       case 1:
         this.router.navigateByUrl('/live-stream');
         this.isLiveStreaming = true;
         this.leftScreenWidth = "72%";
+        this.updateAreaAfteTab();
         break;
       default:
         break;
@@ -70,6 +73,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.totalRows = event.totalRows;
     this.totalColumns = event.totalColumns;
 
+    this.rowsArray = Array.from({ length: this.totalRows }, (_, i) => i);
+    this.columnsArray = Array.from({ length: this.totalColumns }, (_, i) => i);
+    this.boxValues = Array.from({ length: this.totalRows }, () => Array(this.totalColumns).fill(null));
+  }
+
+  updateAreaAfteTab(){
     this.rowsArray = Array.from({ length: this.totalRows }, (_, i) => i);
     this.columnsArray = Array.from({ length: this.totalColumns }, (_, i) => i);
     this.boxValues = Array.from({ length: this.totalRows }, () => Array(this.totalColumns).fill(null));
