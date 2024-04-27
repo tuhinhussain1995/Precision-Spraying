@@ -33,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   ngOnInit() {
+    
   }
 
   ngAfterViewInit() {
@@ -56,11 +57,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.leftScreenWidth = "calc(100% - 20px)";
         break;
       case 1:
-        this.router.navigateByUrl('/video');
-        this.isLiveStreaming = false;
-        this.leftScreenWidth = "calc(100% - 20px)";
-        break;
-      case 2:
         this.router.navigateByUrl('/live-stream');
         this.isLiveStreaming = true;
         this.leftScreenWidth = "72%";

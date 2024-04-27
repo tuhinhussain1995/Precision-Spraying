@@ -3,15 +3,13 @@
   <div style="padding-top: 20px; padding-left: 20px; height: 100%; float: left;" [style.width]="leftScreenWidth">
     <mat-card style="height: calc(100% - 20px);">
       <mat-tab-group (selectedTabChange)="tabChanged($event)">
-        <mat-tab label="Detection using Image"></mat-tab>
-        <mat-tab label="Detection using Video"></mat-tab>
+        <mat-tab label="Detection using Image & Video"></mat-tab>
         <mat-tab label="Live Streaming Detection"></mat-tab>
       </mat-tab-group>
   
       <div style="padding: 15px;">
         <app-image *ngIf="selectedTabIndex === 0"></app-image>
-        <app-video *ngIf="selectedTabIndex === 1"></app-video>
-        <app-live-stream *ngIf="selectedTabIndex === 2"
+        <app-live-stream *ngIf="selectedTabIndex === 1"
         [totalRows]="totalRows" 
         [totalColumns]="totalColumns"
         (updateRandomBox)="updateRandomBox($event.randomRow, $event.randomCol, $event.randomValue)"
