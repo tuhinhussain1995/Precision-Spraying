@@ -42,7 +42,9 @@
     cursor: pointer;
     border: 2px solid #ccc;
     border-radius: 5px;
-  }
+    overflow: hidden;
+    padding-top: 30px;
+}
 
 
 .custom-file-input {
@@ -54,5 +56,20 @@
     top: 0;
     left: 0;
     z-index: 1;
-  }
+}
+
+.title {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    background-color: rgb(18, 91, 121); 
+    color: white;
+    box-sizing: border-box; 
+    border-top-left-radius: 5px; 
+    border-top-right-radius: 5px;
+    text-align: center;
+    height: 30px;
+    padding-top: 2px;
+}
   

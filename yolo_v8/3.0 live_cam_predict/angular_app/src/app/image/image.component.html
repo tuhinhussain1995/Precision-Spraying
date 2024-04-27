@@ -7,28 +7,43 @@
         
         <div style="height: 100%; width: 100%;">
           <div style="height: calc(50% - 5px); width: 100%;">
-            <div style="width: calc(50% - 5px); height: 100%; float: left;" class="custom-file-label">
+            <div style="position: relative; width: calc(50% - 5px); height: 100%; float: left;" class="custom-file-label">
               <label style="text-align: center;">
                 <mat-icon>image_search</mat-icon><br>
                 <span>Click to Upload a Image file</span>
                 <input type="file" class="custom-file-input" (change)="onFileSelected($event)" accept="image/png, image/gif, image/jpeg">
               </label>
+              <div class="title">
+                <p style="margin: 0;">Upload Image</p>
+              </div>
             </div>
-            <div style="width: calc(50% - 5px); height: 100%; margin-left: 10px; float: left;" class="custom-file-label">
+            
+            <div style="position: relative; width: calc(50% - 5px); height: 100%; margin-left: 10px; float: left;" class="custom-file-label">
               <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image" height="100%" width="100%">
+              <div class="title">
+                <p style="margin: 0;">Captured Image</p>
+              </div>
             </div>
           </div>
           <div style="height: calc(50% - 5px); width: 100%; margin-top: 10px;">
-            <div style="width: calc(50% - 5px); height: 100%; float: left;" class="custom-file-label">
+            <div style="position: relative; width: calc(50% - 5px); height: 100%; float: left;" class="custom-file-label">
               <span *ngIf="responseReceived">
                 <img [src]="imageUrl" alt="Uploaded Image" height="100%" width="100%">
               </span>
+
+              <div class="title">
+                <p style="margin: 0;">Predicted Image</p>
+              </div>
             </div>
-            <div style="width: calc(50% - 5px); height: 100%; margin-left: 10px; float: left;" class="custom-file-label">
+            <div style="position: relative; width: calc(50% - 5px); height: 100%; margin-left: 10px; float: left;" class="custom-file-label">
               <span *ngIf="responseReceived">
                 <p>Class Names: {{ response.class_names }}</p>
                 <p>Object Locations: {{ response.object_locations }}</p>
               </span>
+
+              <div class="title">
+                <p style="margin: 0;">Predicted Result</p>
+              </div>
             </div>
           </div>
         </div>
