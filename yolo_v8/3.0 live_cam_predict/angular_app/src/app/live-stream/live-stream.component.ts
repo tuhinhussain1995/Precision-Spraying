@@ -50,6 +50,8 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   currentProcessingColumn: number = 1;
   totalColumnCompleted: number = 0;
 
+  isFullScreen: boolean = false;
+
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
   @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
 
@@ -315,5 +317,15 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   stopBlinking(): void {
     clearInterval(this.blinkInterval);
     this.dotVisible = false;
+  }
+
+  toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+
+    this.isFullScreen = !this.isFullScreen;
   }
 }

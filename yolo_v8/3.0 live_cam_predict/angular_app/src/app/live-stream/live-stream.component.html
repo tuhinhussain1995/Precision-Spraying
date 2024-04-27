@@ -148,6 +148,11 @@
             <button *ngIf="!resetWholeProcess" (click)="applyArea()" mat-flat-button color="primary" style="margin-left: 10px;">
                 <mat-icon> map</mat-icon> Apply Area
             </button>
+
+            <button (click)="toggleFullscreen()" color="accent" style="margin-left: 10px; width: 35px; height: 35px; border-radius: 6px; background-color: rgb(12, 147, 180); border: 1px solid rgb(12, 147, 180);">
+                <mat-icon style="font-size: 30px; margin-left: -7px !important; color: white;">{{ isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+            </button>
+            
         </div>
     </div>
     
