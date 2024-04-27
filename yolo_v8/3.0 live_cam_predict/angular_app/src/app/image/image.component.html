@@ -5,18 +5,33 @@
     <mat-card style="height: 100%; width: calc(50% - 10px); float: left; position: relative;" class="mat-main-card">
         <div class="overlay"><mat-icon style="margin-right: 5px;">image</mat-icon> Image</div>
         
-        <div class="col-md-6">
-          <input type="file" (change)="onFileSelected($event)" class="form-control">
+        <div style="height: 100%; width: 100%;">
+          <div style="height: calc(50% - 5px); width: 100%;">
+            <div style="width: calc(50% - 5px); height: 100%; float: left;" class="custom-file-label">
+              <label style="text-align: center;">
+                <mat-icon>image_search</mat-icon><br>
+                <span>Click to Upload a Image file</span>
+                <input type="file" class="custom-file-input" (change)="onFileSelected($event)" accept="image/png, image/gif, image/jpeg">
+              </label>
+            </div>
+            <div style="width: calc(50% - 5px); height: 100%; margin-left: 10px; float: left;" class="custom-file-label">
+              <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image" height="100%" width="100%">
+            </div>
+          </div>
+          <div style="height: calc(50% - 5px); width: 100%; margin-top: 10px;">
+            <div style="width: calc(50% - 5px); height: 100%; float: left;" class="custom-file-label">
+              <span *ngIf="responseReceived">
+                <img [src]="imageUrl" alt="Uploaded Image" height="100%" width="100%">
+              </span>
+            </div>
+            <div style="width: calc(50% - 5px); height: 100%; margin-left: 10px; float: left;" class="custom-file-label">
+              <span *ngIf="responseReceived">
+                <p>Class Names: {{ response.class_names }}</p>
+                <p>Object Locations: {{ response.object_locations }}</p>
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6">
-          <img *ngIf="uploadedImage" [src]="uploadedImage" alt="Uploaded Image">
-        </div>
-
-        <span *ngIf="responseReceived">
-          <img [src]="imageUrl" alt="Uploaded Image" >
-          <p>Class Names: {{ response.class_names }}</p>
-          <p>Object Locations: {{ response.object_locations }}</p>
-        </span>
     </mat-card>
 
     <mat-card style="height: 100%; width: calc(50% - 10px); float: left; margin-left: 15px; position: relative;" class="mat-main-card">
