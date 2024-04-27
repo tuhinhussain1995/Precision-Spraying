@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
+from flask_restful import Api, Resource
 from flask_cors import CORS
 from ultralytics import YOLO
 import cv2
@@ -6,8 +7,11 @@ from PIL import Image
 from io import BytesIO
 import base64
 import numpy as np
+import os
+import shutil
 
 app = Flask(__name__)
+api = Api(app)
 CORS(app)  # Enable CORS for all routes
 
 # Configure YOLO model
@@ -53,7 +57,6 @@ def process_image(base64_string):
 
     return class_names, object_locations, img_bytes
 
-# API endpoint for processing images
 @app.route('/process_image', methods=['POST'])
 def process_uploaded_image():
     if 'image' not in request.json:
@@ -67,6 +70,37 @@ def process_uploaded_image():
 
     # Return the result
     return jsonify({'class_names': class_names, 'object_locations': object_locations, 'img_bytes': img_bytes})
+
+@app.route('/process_video', methods=['POST'])
+def process_uploaded_video():
+    if 'video' not in request.files:
+        return jsonify({'error': 'No video provided'}), 400
+
+    # Navigate to the directory
+    directory = "C:/Users/tuhin/Desktop/Precision-Spraying/yolo_v8/3.0 live_cam_predict/flask_api/runs/detect"
+
+    # List all directories in the specified directory
+    directories = [d for d in os.listdir(directory) if os.path.isdir(os.path.join(directory, d))]
+
+    # Iterate over each directory and delete it
+    for d in directories:
+        shutil.rmtree(os.path.join(directory, d))
+
+    # Receive video file
+    video_file = request.files['video']
+
+    # Save video file to a temporary location
+    video_path = 'processed_video.avi'
+    video_file.save(video_path)
+
+    # Process the video using YOLO
+    results = model.predict(task='detect', mode='predict', model='best.pt', conf=0.25, source=video_path, save=True)
+
+    # Return path to processed video
+    processed_video_path = 'C:/Users/tuhin/Desktop/Precision-Spraying/yolo_v8/3.0 live_cam_predict/flask_api/runs/detect/predict/processed_video.avi'
+
+    # Return processed video
+    return send_file(processed_video_path, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
