@@ -117,7 +117,7 @@
         </mat-card>
     </div>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; height: calc(10% - 15px); padding-top: 15px !important;">
+    <div style="display: flex; justify-content: space-between; align-items: center; height: calc(10% - 15px); padding-top: 20px !important;">
         <div>
             <button *ngIf="!onProcess" (click)="startProcess()" mat-flat-button color="primary">
                 <mat-icon>videocam</mat-icon> Start Live Streaming
@@ -132,16 +132,22 @@
             </button>
         </div>
     
-        <div style="display: flex; justify-content: flex-end;">
-            <div style="margin-left: 10px;">
-                <label for="totalRows" style="font-weight: bold;">Total Area: </label>
-                <input type="number" id="totalRows" [(ngModel)]="totalRows" style="width: 50px; text-align: center; margin-left: 3px;" maxlength="4">
+        <div style="display: flex; justify-content: flex-end; margin-top: 5px;">
+            <div style="width: 240px; margin-top: 4px;">
+                <div style="float: left;">
+                    <label for="totalRows" style="font-weight: bold;">Total Area: </label>
+                    <input type="number" id="totalRows" [(ngModel)]="totalRows" style="width: 50px; text-align: center; margin-left: 3px;" [disabled]="resetWholeProcess" maxlength="4">
+                </div>
+                <div style="margin-left: 4px; float: left;">
+                    <label for="totalColumns" style="margin-right: 3px;">m x </label>
+                    <input type="number" id="totalColumns" [(ngModel)]="totalColumns" style="width: 50px; text-align: center;" [disabled]="resetWholeProcess" maxlength="4">
+                    m
+                </div>
             </div>
-            <div style="margin-left: 2px;">
-                <label for="totalColumns" style="margin-right: 3px;">m x </label>
-                <input type="number" id="totalColumns" [(ngModel)]="totalColumns" style="width: 50px; text-align: center;" maxlength="4">
-                m
-            </div>
+
+            <button *ngIf="!resetWholeProcess" (click)="applyArea()" mat-flat-button color="primary" style="margin-left: 10px;">
+                <mat-icon> map</mat-icon> Apply Area
+            </button>
         </div>
     </div>
     

@@ -44,6 +44,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   @Input() totalRows !: number;
   @Input() totalColumns !: number;
   @Output("updateRandomBox") updateRandomBox: EventEmitter<any> = new EventEmitter();
+  @Output() areaApplied: EventEmitter<{ totalRows: number, totalColumns: number }> = new EventEmitter();
 
   currentProcessingRow: number = 1;
   currentProcessingColumn: number = 1;
@@ -108,6 +109,10 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   resetWholeProcessNow(){
     window.location.reload();
+  }
+
+  applyArea(){
+    this.areaApplied.emit({ totalRows: this.totalRows, totalColumns: this.totalColumns });
   }
 
   startCamera() {

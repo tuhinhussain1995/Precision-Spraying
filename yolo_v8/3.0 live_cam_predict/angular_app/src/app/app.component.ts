@@ -39,7 +39,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   ngAfterViewInit() {
     setTimeout(() => {
       if (this.tabGroup) {
-        this.tabGroup.selectedIndex = 2;
+        this.tabGroup.selectedIndex = 1;
       }
     });
   }
@@ -64,6 +64,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
       default:
         break;
     }
+  }
+
+  updateArea(event: { totalRows: number, totalColumns: number }) {
+    this.totalRows = event.totalRows;
+    this.totalColumns = event.totalColumns;
+
+    this.rowsArray = Array.from({ length: this.totalRows }, (_, i) => i);
+    this.columnsArray = Array.from({ length: this.totalColumns }, (_, i) => i);
+    this.boxValues = Array.from({ length: this.totalRows }, () => Array(this.totalColumns).fill(null));
   }
 
   updateRandomBox(randomRow: number, randomCol: number, randomValue: number) {
