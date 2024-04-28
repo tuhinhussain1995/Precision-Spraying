@@ -9,3 +9,8 @@ html, body {
 body { margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
+
+.backdropBackground {
+    background-color: #94a1a1c0;
+    backdrop-filter: blur(2px);
+}

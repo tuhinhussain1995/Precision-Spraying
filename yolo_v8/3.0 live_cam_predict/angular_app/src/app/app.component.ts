@@ -63,7 +63,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   openDialog() {
     this.dialog.open(IntroductionDialogComponent, {
       height: '67%',
-      width: '60%'
+      width: '60%',
+      backdropClass: 'backdropBackground'
   });
   }
 
