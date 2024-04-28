@@ -16,13 +16,16 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { IntroductionDialogComponent } from './introduction-dialog/introduction-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ImageComponent,
     VideoComponent,
-    LiveStreamComponent
+    LiveStreamComponent,
+    IntroductionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [

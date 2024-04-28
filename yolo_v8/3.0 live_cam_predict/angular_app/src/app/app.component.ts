@@ -3,6 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { MatTabGroup } from '@angular/material/tabs';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { IntroductionDialogComponent } from './introduction-dialog/introduction-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +33,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   selectedTabIndex: number = 0;
 
   constructor(private http: HttpClient,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { 
     this.router.navigateByUrl('/live-stream'); 
     this.isLiveStreaming = true;
@@ -43,10 +52,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.tabGroup.selectedIndex = 1;
       }
     });
+
+    this.openDialog();
   }
 
   ngOnDestroy() {
     
+  }
+
+  openDialog() {
+    this.dialog.open(IntroductionDialogComponent, {
+      height: '67%',
+      width: '60%'
+  });
   }
 
   tabChanged(event: MatTabChangeEvent) {
