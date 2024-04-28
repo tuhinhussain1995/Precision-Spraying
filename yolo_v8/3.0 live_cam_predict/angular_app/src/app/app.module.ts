@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     MatIconModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [

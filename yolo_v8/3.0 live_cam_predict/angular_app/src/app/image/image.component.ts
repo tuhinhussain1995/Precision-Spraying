@@ -17,6 +17,8 @@ export class ImageComponent {
 
   videoProcessed: boolean = false;
   base64Video: string = "";
+  videoProcessing: boolean = false;
+  imageProcessing: boolean = false;
 
   constructor(private http: HttpClient) { 
     this.screenHeight = (window.innerHeight - 120) + 'px'; 
@@ -26,6 +28,9 @@ export class ImageComponent {
   }
 
   onFileSelected(event: any): void {
+    this.imageProcessing = true;
+    this.responseReceived = false;
+
     const file = event.target.files[0];
     const reader = new FileReader();
 
@@ -49,14 +54,18 @@ export class ImageComponent {
       .subscribe((res: any) => {
         this.response = res;
         this.responseReceived = true;
-
+        this.imageProcessing = false;
         this.imageUrl = 'data:image/jpeg;base64,' + res.img_bytes; // Assuming the image is JPEG format
       }, (error) => {
         console.error('API Error:', error);
+        this.imageProcessing = false;
       });
   }
 
   onFileSelectedForVideo(event: any) {
+    this.videoProcessing = true;
+    this.videoProcessed = false;
+
     const file: File = event.target.files[0];
     if (file) {
       const formData = new FormData();
@@ -67,9 +76,11 @@ export class ImageComponent {
           response => {
             this.base64Video = response.base64_video;
             this.videoProcessed = true;
+            this.videoProcessing = false;
           },
           error => {
             console.error('Error processing video:', error);
+            this.videoProcessing = false;
           }
         );
     }
