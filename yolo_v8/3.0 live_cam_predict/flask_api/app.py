@@ -78,7 +78,7 @@ def process_uploaded_video():
         return jsonify({'error': 'No video provided'}), 400
 
     # Navigate to the directory
-    directory = "C:/Users/tuhin/Desktop/Precision-Spraying/yolo_v8/3.0 live_cam_predict/flask_api/runs/detect"
+    directory = os.path.abspath("./runs/detect")
 
     # List all directories in the specified directory
     directories = [d for d in os.listdir(directory) if os.path.isdir(os.path.join(directory, d))]
@@ -98,8 +98,9 @@ def process_uploaded_video():
     results = model.predict(task='detect', mode='predict', model='best.pt', conf=0.25, source=video_path, save=True)
 
     # Return path to processed video
-    processed_video_path = 'C:/Users/tuhin/Desktop/Precision-Spraying/yolo_v8/3.0 live_cam_predict/flask_api/runs/detect/predict/processed_video.avi'
-    output_path = 'C:/Users/tuhin/Desktop/Precision-Spraying/yolo_v8/3.0 live_cam_predict/flask_api/runs/detect/predict/processed_video.mp4'
+    processed_video_path = os.path.abspath("./runs/detect/predict/processed_video.avi")
+
+    output_path = os.path.abspath("./runs/detect/predict/processed_video.mp4")
 
     convert_video(processed_video_path, output_path)
 
