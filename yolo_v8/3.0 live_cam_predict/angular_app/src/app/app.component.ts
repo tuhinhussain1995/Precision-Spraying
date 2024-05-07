@@ -52,8 +52,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
         this.tabGroup.selectedIndex = 1;
       }
     });
-
-    this.openDialog();
   }
 
   ngOnDestroy() {
@@ -65,7 +63,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
       height: '67%',
       width: '60%',
       backdropClass: 'backdropBackground'
-  });
+    });
   }
 
   tabChanged(event: MatTabChangeEvent) {

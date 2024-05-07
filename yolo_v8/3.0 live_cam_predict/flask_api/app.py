@@ -16,7 +16,7 @@ api = Api(app)
 CORS(app)  # Enable CORS for all routes
 
 # Configure YOLO model
-model = YOLO('best.pt')
+model = YOLO('best_latest.pt')
 
 # Process image function
 def process_image(base64_string):
@@ -95,7 +95,7 @@ def process_uploaded_video():
     video_file.save(video_path)
 
     # Process the video using YOLO
-    results = model.predict(task='detect', mode='predict', model='best.pt', conf=0.25, source=video_path, save=True)
+    results = model.predict(task='detect', mode='predict', model='best_latest.pt', conf=0.25, source=video_path, save=True)
 
     # Return path to processed video
     processed_video_path = os.path.abspath("./runs/detect/predict/processed_video.avi")

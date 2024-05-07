@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { IntroductionDialogComponent } from '../introduction-dialog/introduction-dialog.component';
 
 interface CountedItem {
   [key: string]: number;
@@ -55,7 +57,9 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
   @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+    public dialog: MatDialog
+  ) {
     this.screenHeight = (window.innerHeight - 120) + 'px'; 
     window.addEventListener('resize', () => {
       this.screenHeight = (window.innerHeight - 120) + 'px';
@@ -87,6 +91,14 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
     this.onProcess = false;
     clearInterval(this.intervalId);
     this.stopBlinking();
+  }
+
+  openDialog() {
+    this.dialog.open(IntroductionDialogComponent, {
+      height: '69%',
+      width: '60%',
+      backdropClass: 'backdropBackground'
+    });
   }
 
   triggerUpdate(randomRow: number, randomCol: number, randomValue: number) {
