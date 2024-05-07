@@ -139,6 +139,7 @@ def generate_pie_chart():
     data = request.json  # Assuming the data is sent in JSON format
     keys = data['keys']
     values = data['values']
+    heatmapData = data['heatmapData']
     
     # Generate pie chart with seaborn
     plt.figure(figsize=(8, 8))
@@ -178,8 +179,22 @@ def generate_pie_chart():
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     lineChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    # Generate heatmap
+    heatmap_data = np.array(heatmapData)
+    heatmap = plt.figure(figsize=(8, 6))
+    sns.heatmap(heatmap_data, annot=True, cmap='viridis')
+    plt.xlabel('X Axis')
+    plt.ylabel('Y Axis')
+    plt.title('Heatmap')
+
+    # Convert heatmap to base64
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    heatmapChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
     
-    return jsonify({'pieChart': pieChart, 'barChart': barChart, 'lineChart': lineChart})
+    return jsonify({'pieChart': pieChart, 'barChart': barChart, 'lineChart': lineChart, 'heatmapChart': heatmapChart})
 
 if __name__ == '__main__':
     app.run(debug=True)

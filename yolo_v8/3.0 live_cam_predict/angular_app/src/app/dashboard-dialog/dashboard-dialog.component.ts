@@ -11,6 +11,7 @@ export class DashboardDialogComponent implements OnInit {
   pieChart: string = "";
   barChart: string = "";
   lineChart: string = "";
+  heatmapChart: string = "";
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -18,6 +19,7 @@ export class DashboardDialogComponent implements OnInit {
     this.pieChart = this.data.pieChart;
     this.barChart = this.data.barChart;
     this.lineChart = this.data.lineChart;
+    this.heatmapChart = this.data.heatmapChart;
   }
 
 }

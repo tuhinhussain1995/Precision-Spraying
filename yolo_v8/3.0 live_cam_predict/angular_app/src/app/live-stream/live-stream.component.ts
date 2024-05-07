@@ -25,6 +25,9 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   consoleValue: any = [];
   sprayingResult: any = [];
+
+  finalHeatmap: any = [];
+  tempHeatmapData: any = [];
   
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
@@ -58,6 +61,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   pieChart: string = "";
   barChart: string = "";
   lineChart: string = "";
+  heatmapChart: string = "";
 
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
   @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
@@ -109,6 +113,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
   openDashboardDialog(){
     let result = this.countedDetectedClasses;
 
+    let heatmapData: any = this.finalHeatmap;
     let keys: string[] = [];
     let values: number[] = [];
 
@@ -119,11 +124,12 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
         values.push(value); 
     });
 
-    this.http.post<any>('http://localhost:5000/generate_pie_chart', { keys, values })
+    this.http.post<any>('http://localhost:5000/generate_pie_chart', { keys, values, heatmapData })
       .subscribe(response => {
         this.pieChart = response.pieChart;
         this.barChart = response.barChart;
         this.lineChart = response.lineChart;
+        this.heatmapChart = response.heatmapChart;
 
         const dialogConfig = new MatDialogConfig();
 
@@ -135,7 +141,8 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
         dialogConfig.data = {
           pieChart: this.pieChart,
           barChart: this.barChart,
-          lineChart: this.lineChart
+          lineChart: this.lineChart,
+          heatmapChart: this.heatmapChart
         };
 
         this.dialog.open(DashboardDialogComponent, dialogConfig);
@@ -144,6 +151,8 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   triggerUpdate(randomRow: number, randomCol: number, randomValue: number) {
     this.updateRandomBox.emit({ randomRow, randomCol, randomValue });
+
+    console.log(randomValue)
   }
 
   startProcess() {
@@ -318,6 +327,14 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
         }
         else{
           this.currentProcessingRow = this.currentProcessingRow + 1;
+        }
+
+        if(this.totalRows < this.currentProcessingRow || 1 > this.currentProcessingRow){
+          this.finalHeatmap.push(this.tempHeatmapData);
+          this.tempHeatmapData = []
+        }
+        else{
+          this.tempHeatmapData.push(this.response.class_names.length)
         }
 
         this.consoleValue.push(consoleValue);
