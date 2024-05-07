@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_restful import Api, Resource
 from flask_cors import CORS
 from ultralytics import YOLO
+import matplotlib.pyplot as plt
 import cv2
 from PIL import Image
 from io import BytesIO
@@ -9,6 +10,7 @@ import base64
 import numpy as np
 import os
 import shutil
+import seaborn as sns
 from moviepy.editor import VideoFileClip
 
 app = Flask(__name__)
@@ -131,6 +133,27 @@ def convert_video(input_path, output_path, output_format='mp4'):
     
     # Close the video clip
     video_clip.close()
+
+@app.route('/generate_pie_chart', methods=['POST'])
+def generate_pie_chart():
+    data = request.json  # Assuming the data is sent in JSON format
+    keys = data['keys']
+    values = data['values']
+    
+    # Generate pie chart with seaborn
+    plt.figure(figsize=(8, 8))
+    colors = sns.color_palette('pastel', len(keys))
+    plt.pie(values, labels=keys, autopct='%1.1f%%', colors=colors)
+    plt.axis('equal')
+    plt.title('Pie Chart')
+    
+    # Convert pie chart to base64
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    base64_image = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
+    return jsonify({'base64_image': base64_image})
 
 if __name__ == '__main__':
     app.run(debug=True)

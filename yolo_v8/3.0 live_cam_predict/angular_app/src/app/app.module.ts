@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { IntroductionDialogComponent } from './introduction-dialog/introduction-dialog.component';
+import { DashboardDialogComponent } from './dashboard-dialog/dashboard-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { IntroductionDialogComponent } from './introduction-dialog/introduction-
     ImageComponent,
     VideoComponent,
     LiveStreamComponent,
-    IntroductionDialogComponent
+    IntroductionDialogComponent,
+    DashboardDialogComponent
   ],
   imports: [
     BrowserModule,

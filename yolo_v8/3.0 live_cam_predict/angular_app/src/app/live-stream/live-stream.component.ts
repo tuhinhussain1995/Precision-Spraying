@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef, OnDestroy, AfterViewChecked, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig  } from '@angular/material/dialog';
 import { IntroductionDialogComponent } from '../introduction-dialog/introduction-dialog.component';
+import { DashboardDialogComponent } from '../dashboard-dialog/dashboard-dialog.component';
 
 interface CountedItem {
   [key: string]: number;
@@ -54,11 +55,13 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   isFullScreen: boolean = false;
 
+  base64PieChart: string = "";
+
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
   @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
 
   constructor(private http: HttpClient,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
     this.screenHeight = (window.innerHeight - 120) + 'px'; 
     window.addEventListener('resize', () => {
@@ -99,6 +102,38 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
       width: '60%',
       backdropClass: 'backdropBackground'
     });
+  }
+
+  openDashboardDialog(){
+    let result = this.countedDetectedClasses;
+
+    let keys: string[] = [];
+    let values: number[] = [];
+
+    result.forEach(item => {
+        let key = Object.keys(item)[0];
+        let value = item[key];
+        keys.push(key); 
+        values.push(value); 
+    });
+
+    this.http.post<any>('http://localhost:5000/generate_pie_chart', { keys, values })
+      .subscribe(response => {
+        this.base64PieChart = response.base64_image;
+
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.height = '69%';
+        dialogConfig.width = '60%';
+        dialogConfig.backdropClass = 'backdropBackground';
+
+        // Pass your data here
+        dialogConfig.data = {
+          pieChart: this.base64PieChart,
+        };
+
+        this.dialog.open(DashboardDialogComponent, dialogConfig);
+      });
   }
 
   triggerUpdate(randomRow: number, randomCol: number, randomValue: number) {
