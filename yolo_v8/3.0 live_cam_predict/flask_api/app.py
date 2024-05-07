@@ -167,14 +167,35 @@ def generate_pie_chart():
     buffer.seek(0)
     barChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
 
-    # Generate line chart
-    line_chart = plt.figure(figsize=(10, 6))
-    plt.plot(keys, values, marker='o', color='skyblue', linestyle='-')
-    plt.xlabel('Categories')
-    plt.ylabel('Counts')
-    plt.title('Line Chart')
+    # # Generate line chart
+    # line_chart = plt.figure(figsize=(10, 6))
+    # plt.plot(keys, values, marker='o', color='skyblue', linestyle='-')
+    # plt.xlabel('Categories')
+    # plt.ylabel('Counts')
+    # plt.title('Line Chart')
 
-    # Convert line chart to base64
+    # # Convert line chart to base64
+    # buffer = BytesIO()
+    # plt.savefig(buffer, format='png')
+    # buffer.seek(0)
+    # lineChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    value1 = []
+    value2 = []
+
+    for idx, row in enumerate(heatmapData):
+        for idy, val in enumerate(row):
+            value1.append(idx * len(row) + idy + 1)
+            value2.append(val)
+
+    # Generate line graph
+    plt.figure(figsize=(8, 6))
+    plt.plot(value1, value2, marker='o', color='skyblue', linestyle='-')
+    plt.xlabel('X Axis')
+    plt.ylabel('Y Axis')
+    plt.title('Line Graph')
+
+    # Convert line graph to base64
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
