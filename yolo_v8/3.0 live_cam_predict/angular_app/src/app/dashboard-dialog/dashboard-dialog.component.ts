@@ -10,12 +10,14 @@ export class DashboardDialogComponent implements OnInit {
 
   pieChart: string = "";
   barChart: string = "";
-  donutChart: string = "";
+  lineChart: string = "";
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.pieChart = this.data.pieChart;
+    this.barChart = this.data.barChart;
+    this.lineChart = this.data.lineChart;
   }
 
 }

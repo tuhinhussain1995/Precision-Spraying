@@ -151,9 +151,35 @@ def generate_pie_chart():
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
-    base64_image = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    pieChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    # Generate bar chart
+    bar_chart = plt.figure(figsize=(10, 6))
+    sns.barplot(x=keys, y=values, palette='viridis')
+    plt.xlabel('Categories')
+    plt.ylabel('Counts')
+    plt.title('Bar Chart')
+
+    # Convert bar chart to base64
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    barChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    # Generate line chart
+    line_chart = plt.figure(figsize=(10, 6))
+    plt.plot(keys, values, marker='o', color='skyblue', linestyle='-')
+    plt.xlabel('Categories')
+    plt.ylabel('Counts')
+    plt.title('Line Chart')
+
+    # Convert line chart to base64
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    lineChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
     
-    return jsonify({'base64_image': base64_image})
+    return jsonify({'pieChart': pieChart, 'barChart': barChart, 'lineChart': lineChart})
 
 if __name__ == '__main__':
     app.run(debug=True)

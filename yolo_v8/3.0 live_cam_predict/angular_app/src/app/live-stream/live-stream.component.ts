@@ -55,7 +55,9 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
   isFullScreen: boolean = false;
 
-  base64PieChart: string = "";
+  pieChart: string = "";
+  barChart: string = "";
+  lineChart: string = "";
 
   @ViewChild('scrollContainer') private scrollContainer !: ElementRef;
   @ViewChild('scrollContainer1') private scrollContainer1 !: ElementRef;
@@ -119,7 +121,9 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
     this.http.post<any>('http://localhost:5000/generate_pie_chart', { keys, values })
       .subscribe(response => {
-        this.base64PieChart = response.base64_image;
+        this.pieChart = response.pieChart;
+        this.barChart = response.barChart;
+        this.lineChart = response.lineChart;
 
         const dialogConfig = new MatDialogConfig();
 
@@ -129,7 +133,9 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
         // Pass your data here
         dialogConfig.data = {
-          pieChart: this.base64PieChart,
+          pieChart: this.pieChart,
+          barChart: this.barChart,
+          lineChart: this.lineChart
         };
 
         this.dialog.open(DashboardDialogComponent, dialogConfig);
