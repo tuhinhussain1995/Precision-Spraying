@@ -9,6 +9,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DashboardDialogComponent implements OnInit {
 
   pieChart: string = "";
+  barChart: string = "";
+  donutChart: string = "";
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 

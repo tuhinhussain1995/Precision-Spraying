@@ -6,8 +6,21 @@
     </div>
 
     <div style="width: 100%; line-height: 8px; font-family: 'Roboto', sans-serif; margin-top: 10px; padding: 15px; font-size: 15px;">
-        <div *ngIf="pieChart">
-            <img [src]="'data:image/png;base64,' + pieChart" alt="Pie Chart">
-          </div>
+        <div style="width: 100%;">
+            <div *ngIf="pieChart" style="width: 50%; float: left;">
+                <img [src]="'data:image/png;base64,' + pieChart" alt="Pie Chart" height="100%" width="100%">
+            </div>
+            <div *ngIf="pieChart" style="width: 50%; float: left;">
+                <img [src]="'data:image/png;base64,' + pieChart" alt="Pie Chart" height="100%" width="100%">
+            </div>
+        </div>
+        <div style="width: 100%;">
+            <div *ngIf="pieChart" style="width: 50%; float: left;">
+                <img [src]="'data:image/png;base64,' + pieChart" alt="Pie Chart" height="100%" width="100%">
+            </div>
+            <div *ngIf="pieChart" style="width: 50%; float: left;">
+                <img [src]="'data:image/png;base64,' + pieChart" alt="Pie Chart" height="100%" width="100%">
+            </div>
+        </div>
     </div>
 </div>
