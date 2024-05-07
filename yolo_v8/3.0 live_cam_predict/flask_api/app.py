@@ -183,9 +183,12 @@ def generate_pie_chart():
     # Generate heatmap
     heatmap_data = np.array(heatmapData)
     heatmap = plt.figure(figsize=(8, 6))
-    sns.heatmap(heatmap_data, annot=True, cmap='viridis')
-    plt.xlabel('X Axis')
-    plt.ylabel('Y Axis')
+    sns_plot = sns.heatmap(heatmap_data, annot=True, cmap='viridis')
+
+    # Set x and y axis labels
+    sns_plot.set_xlabel('X Axis', fontsize=12, labelpad=10)  # Adjust fontsize and labelpad as needed
+    sns_plot.set_ylabel('Y Axis', fontsize=12, labelpad=10)  # Adjust fontsize and labelpad as needed
+
     plt.title('Heatmap')
 
     # Convert heatmap to base64
