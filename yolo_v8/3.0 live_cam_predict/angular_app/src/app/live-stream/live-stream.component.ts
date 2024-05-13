@@ -124,7 +124,7 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
         values.push(value); 
     });
 
-    this.http.post<any>('http://localhost:5000/generate_pie_chart', { keys, values, heatmapData })
+    this.http.post<any>('http://localhost:5000/generate_charts', { keys, values, heatmapData })
       .subscribe(response => {
         this.pieChart = response.pieChart;
         this.barChart = response.barChart;
@@ -142,7 +142,11 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
           pieChart: this.pieChart,
           barChart: this.barChart,
           lineChart: this.lineChart,
-          heatmapChart: this.heatmapChart
+          heatmapChart: this.heatmapChart,
+          pieChart_desc: response.pieChart_desc,
+          barChart_desc: response.barChart_desc,
+          lineChart_desc: response.lineChart_desc,
+          heatmapChart_desc: response.heatmapChart_desc
         };
 
         this.dialog.open(DashboardDialogComponent, dialogConfig);

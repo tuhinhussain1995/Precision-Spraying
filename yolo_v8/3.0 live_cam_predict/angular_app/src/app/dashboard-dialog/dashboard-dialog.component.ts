@@ -13,6 +13,11 @@ export class DashboardDialogComponent implements OnInit {
   lineChart: string = "";
   heatmapChart: string = "";
 
+  pieChart_desc: string = ""
+  barChart_desc: string = ""
+  lineChart_desc: string = ""
+  heatmapChart_desc: string = ""
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
@@ -20,6 +25,13 @@ export class DashboardDialogComponent implements OnInit {
     this.barChart = this.data.barChart;
     this.lineChart = this.data.lineChart;
     this.heatmapChart = this.data.heatmapChart;
+
+    this.pieChart_desc = this.data.pieChart_desc;
+    this.barChart_desc = this.data.barChart_desc;
+    this.lineChart_desc = this.data.lineChart_desc;
+    this.heatmapChart_desc = this.data.heatmapChart_desc;
+
+    console.log(this.data)
   }
 
 }

@@ -134,7 +134,7 @@ def convert_video(input_path, output_path, output_format='mp4'):
     # Close the video clip
     video_clip.close()
 
-@app.route('/generate_pie_chart', methods=['POST'])
+@app.route('/generate_charts', methods=['POST'])
 def generate_pie_chart():
     data = request.json  # Assuming the data is sent in JSON format
     keys = data['keys']
@@ -166,19 +166,6 @@ def generate_pie_chart():
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     barChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
-
-    # # Generate line chart
-    # line_chart = plt.figure(figsize=(10, 6))
-    # plt.plot(keys, values, marker='o', color='skyblue', linestyle='-')
-    # plt.xlabel('Categories')
-    # plt.ylabel('Counts')
-    # plt.title('Line Chart')
-
-    # # Convert line chart to base64
-    # buffer = BytesIO()
-    # plt.savefig(buffer, format='png')
-    # buffer.seek(0)
-    # lineChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
 
     value1 = []
     value2 = []
@@ -217,8 +204,17 @@ def generate_pie_chart():
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     heatmapChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    pieChart_desc = f'A pie chart showing the distribution of categories: {", ".join(keys)} with corresponding values: {", ".join(map(str, values))}.'
+    barChart_desc = f'A bar chart displaying the frequency of occurrence for categories: {", ".join(keys)} with corresponding values: {", ".join(map(str, values))}.'
+    lineChart_desc = 'A line graph showing trends or relationships over time or continuous data.'
+    heatmapChart_desc = 'A heatmap indicating relationships between two categorical variables or data intensity.'
     
-    return jsonify({'pieChart': pieChart, 'barChart': barChart, 'lineChart': lineChart, 'heatmapChart': heatmapChart})
+    return jsonify({'pieChart': pieChart, 'barChart': barChart, 'lineChart': lineChart, 'heatmapChart': heatmapChart, 
+                    'pieChart_desc': pieChart_desc,
+                    'barChart_desc': barChart_desc,
+                    'lineChart_desc': lineChart_desc,
+                    'heatmapChart_desc': heatmapChart_desc})
 
 if __name__ == '__main__':
     app.run(debug=True)
