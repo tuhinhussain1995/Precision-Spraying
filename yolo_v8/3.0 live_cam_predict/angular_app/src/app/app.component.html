@@ -26,11 +26,11 @@
         <p style="font-size: 18px;">Detected Layout Heatmap  ({{totalRows}}m x {{totalColumns}}m)</p>
       </mat-card-content>
 
-      <div class="table-container">
+      <div class="table-container" class="div-background">
         <table class="custom-table">
           <tr *ngFor="let row of rowsArray; let i = index">
             <td *ngFor="let col of columnsArray; let j = index">
-              <div class="square-box" [style.background-color]="getBoxColor(boxValues[i][j])">{{ boxValues[i][j] }}</div>
+              <div class="square-box cell-background" [ngStyle]="{ 'background-color': getBoxColor(boxValues[i][j]) !== '#FFFFFF' ? getBoxColor(boxValues[i][j]) : 'transparent', 'background-image': getBoxColor(boxValues[i][j]) === '#FFFFFF' ? 'url(/assets/sprout1.png)' : 'none' }">{{ boxValues[i][j] }}</div>
             </td>
           </tr>
         </table>
