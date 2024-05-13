@@ -133,8 +133,8 @@ export class LiveStreamComponent implements OnDestroy, AfterViewChecked, OnInit 
 
         const dialogConfig = new MatDialogConfig();
 
-        dialogConfig.height = '69%';
-        dialogConfig.width = '60%';
+        dialogConfig.height = '85%';
+        dialogConfig.width = '85%';
         dialogConfig.backdropClass = 'backdropBackground';
 
         // Pass your data here
