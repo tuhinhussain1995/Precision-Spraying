@@ -16,7 +16,7 @@ Step 1:
 =============
 Clone the repository and open ssd mobile-net folder.
 
- 	Directory Descriptions:
+ 	## Directory Descriptions:
 	data: that stores all of images and annotation data and that images and annotation will use to train the model.
 	models: after train the models will save inside this directory.
 	videos: to generate the train images we can put a video file in this directory and by using the prepare_dataset.py we can generate the images from this video.
