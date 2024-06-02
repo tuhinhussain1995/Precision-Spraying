@@ -1,0 +1,10 @@
+disease_pepper
+weed
+disease_grape
+healthy_pepper
+pest_snail
+healthy_grape
+pest_weevil
+pest_grasshopper
+healthy_strawberry
+disease_strawberry
