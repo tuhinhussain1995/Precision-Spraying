@@ -41,12 +41,12 @@ Now create a file named labels.txt inside data/model0110/Annotation/labels.txt a
 Step 5:
 =============
 Now open a terminal and run the following command to train and generate the model.
-python3 train_ssd.py --dataset-type=voc --data=data/model0110/ --model-dir=models/model0110 --batch-size=2 --workers=2 --epochs=500
+	$ python3 train_ssd.py --dataset-type=voc --data=data/model0110/ --model-dir=models/model0110 --batch-size=2 --workers=2 --epochs=500
 
 Step 6:
 =============
 After complete all the epochs to check the best model run the following command from the root directory and this will show a graph when the train started and how did the loss reducted throwout the whole process. And also you can see which epoch generated the best model with lowest loss.
-python3 result.py
+	$ python3 result.py
 
 Step 7:
 =============
