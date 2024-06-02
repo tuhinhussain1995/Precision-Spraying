@@ -44,11 +44,17 @@ Now open a terminal and run the following command to train and generate the mode
 
 	$ python3 train_ssd.py --dataset-type=voc --data=data/model0110/ --model-dir=models/model0110 --batch-size=2 --workers=2 --epochs=500
 
+ ![1](https://github.com/tuhinhussain1995/Precision-Spraying/assets/50451175/c2e91980-7fb0-473c-83d5-d3c6ac3afc7c)
+
+
 Step 6:
 =============
 After complete all the epochs to check the best model run the following command from the root directory and this will show a graph when the train started and how did the loss reducted throwout the whole process. And also you can see which epoch generated the best model with lowest loss.
 
 	$ python3 result.py
+
+ ![2](https://github.com/tuhinhussain1995/Precision-Spraying/assets/50451175/df405cc1-5798-4aa9-90d8-711cf12d17ad)
+
 
 Step 7:
 =============
