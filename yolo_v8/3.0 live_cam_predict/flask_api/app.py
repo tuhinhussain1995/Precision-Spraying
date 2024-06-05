@@ -141,31 +141,36 @@ def generate_pie_chart():
     values = data['values']
     heatmapData = data['heatmapData']
     
+    # Set the font size for all plots
+    plt.rcParams.update({'font.size': 18})
+
     # Generate pie chart with seaborn
     plt.figure(figsize=(8, 8))
     colors = sns.color_palette('pastel', len(keys))
-    plt.pie(values, labels=keys, autopct='%1.1f%%', colors=colors)
+    plt.pie(values, labels=keys, autopct='%1.1f%%', colors=colors, textprops={'fontsize': 18})
     plt.axis('equal')
-    plt.title('Pie Chart')
+    plt.title('Pie Chart', fontsize=20)
     
     # Convert pie chart to base64
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     pieChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    plt.close()
 
     # Generate bar chart
-    bar_chart = plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 6))
     sns.barplot(x=keys, y=values, palette='viridis')
-    plt.xlabel('Categories')
-    plt.ylabel('Counts')
-    plt.title('Bar Chart')
-
+    plt.xlabel('Categories', fontsize=16)
+    plt.ylabel('Counts', fontsize=16)
+    plt.title('Bar Chart', fontsize=18)
+    
     # Convert bar chart to base64
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     barChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    plt.close()
 
     value1 = []
     value2 = []
@@ -175,46 +180,58 @@ def generate_pie_chart():
             value1.append(idx * len(row) + idy + 1)
             value2.append(val)
 
+    max_value = max(value2)
+    min_value = min(value2)
+
     # Generate line graph
     plt.figure(figsize=(8, 6))
     plt.plot(value1, value2, marker='o', color='skyblue', linestyle='-')
-    plt.xlabel('X Axis')
-    plt.ylabel('Y Axis')
-    plt.title('Line Graph')
-
+    plt.xlabel('X Axis', fontsize=16)
+    plt.ylabel('Y Axis', fontsize=16)
+    plt.title('Line Graph', fontsize=18)
+    
     # Convert line graph to base64
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     lineChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    plt.close()
 
     # Generate heatmap
     heatmap_data = np.array(heatmapData)
-    heatmap = plt.figure(figsize=(8, 6))
-    sns_plot = sns.heatmap(heatmap_data, annot=True, cmap='viridis')
+    max_heatmap_value = heatmap_data.max()
+    min_heatmap_value = heatmap_data.min()
+    
+    plt.figure(figsize=(8, 6))
+    sns_plot = sns.heatmap(heatmap_data, annot=True, cmap='viridis', annot_kws={'size': 12})
 
     # Set x and y axis labels
-    sns_plot.set_xlabel('X Axis', fontsize=12, labelpad=10)  # Adjust fontsize and labelpad as needed
-    sns_plot.set_ylabel('Y Axis', fontsize=12, labelpad=10)  # Adjust fontsize and labelpad as needed
-
-    plt.title('Heatmap')
-
+    sns_plot.set_xlabel('X Axis', fontsize=16, labelpad=10)  # Adjust fontsize and labelpad as needed
+    sns_plot.set_ylabel('Y Axis', fontsize=16, labelpad=10)  # Adjust fontsize and labelpad as needed
+    plt.title('Heatmap', fontsize=18)
+    
     # Convert heatmap to base64
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     buffer.seek(0)
     heatmapChart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    plt.close()
 
-    pieChart_desc = f'A pie chart showing the distribution of categories: {", ".join(keys)} with corresponding values: {", ".join(map(str, values))}.'
-    barChart_desc = f'A bar chart displaying the frequency of occurrence for categories: {", ".join(keys)} with corresponding values: {", ".join(map(str, values))}.'
-    lineChart_desc = 'A line graph showing trends or relationships over time or continuous data.'
-    heatmapChart_desc = 'A heatmap indicating relationships between two categorical variables or data intensity.'
-    
+    pieChart_desc = f'A pie chart showing the distribution of categories: {", ".join(keys)} with corresponding values: {", ".join(map(str, values))}. This chart visually represents the proportion of each category relative to the total.'
+
+    barChart_desc = f'A bar chart displaying the frequency of occurrence for categories: {", ".join(keys)} with corresponding values: {", ".join(map(str, values))}. This chart helps in comparing the quantities of different categories side by side.'
+
+    lineChart_desc = f'A line graph showing the data trend across points. The data points are: {value1} with corresponding values: {value2}. The y-values range from a minimum of {min_value} to a maximum of {max_value}, providing insights into the variations over the given sequence.'
+
+    heatmapChart_desc = f'A heatmap indicating the intensity of data values within a matrix. The data ranges from a minimum value of {min_heatmap_value} to a maximum value of {max_heatmap_value}, showing relationships between different data points in a grid format.'
+
     return jsonify({'pieChart': pieChart, 'barChart': barChart, 'lineChart': lineChart, 'heatmapChart': heatmapChart, 
                     'pieChart_desc': pieChart_desc,
                     'barChart_desc': barChart_desc,
                     'lineChart_desc': lineChart_desc,
                     'heatmapChart_desc': heatmapChart_desc})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
