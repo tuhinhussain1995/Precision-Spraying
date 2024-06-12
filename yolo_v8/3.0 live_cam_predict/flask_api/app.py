@@ -145,11 +145,13 @@ def generate_pie_chart():
     plt.rcParams.update({'font.size': 18})
 
     # Generate pie chart with seaborn
-    plt.figure(figsize=(8, 8))
+    plt.figure(figsize=(10, 10))
     colors = sns.color_palette('pastel', len(keys))
     plt.pie(values, labels=keys, autopct='%1.1f%%', colors=colors, textprops={'fontsize': 18})
     plt.axis('equal')
     plt.title('Pie Chart', fontsize=20)
+
+    plt.tight_layout()
     
     # Convert pie chart to base64
     buffer = BytesIO()
@@ -164,6 +166,9 @@ def generate_pie_chart():
     plt.xlabel('Categories', fontsize=16)
     plt.ylabel('Counts', fontsize=16)
     plt.title('Bar Chart', fontsize=18)
+
+    plt.xticks(rotation=45, ha='right', fontsize=12)
+    plt.tight_layout()
     
     # Convert bar chart to base64
     buffer = BytesIO()
